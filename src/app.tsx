@@ -9,6 +9,7 @@ function App() {
       <button
         onClick={() => setCount(count + 1)}
         aria-atomic
+        data-testid="test"
       >
         Click me
       </button>
