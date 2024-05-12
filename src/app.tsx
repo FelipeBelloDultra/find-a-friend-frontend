@@ -5,8 +5,13 @@ function App() {
 
   return (
     <div>
-      <p>You clicked {count} times</p>
-      <button onClick={() => setCount(count + 1)}>Click me</button>
+      <p>You clicked {count} times</p>{" "}
+      <button
+        onClick={() => setCount(count + 1)}
+        aria-atomic
+      >
+        Click me
+      </button>
     </div>
   );
 }
