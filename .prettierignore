@@ -3,3 +3,4 @@ coverage
 dist
 !.storybook
 docker-compose.yml
+index.html
