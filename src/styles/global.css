@@ -4,7 +4,7 @@
 
 @layer base {
   html {
-    @apply bg-white text-secondary;
+    @apply bg-white text-primary;
   }
 
   html,

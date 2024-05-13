@@ -12,11 +12,13 @@
     "lint:check": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0 --fix",
     "preview": "vite preview",
-    "test": "vitest"
+    "test:components": "vitest run src/components/ src/pages/",
+    "test:components:watch": "vitest src/components/ src/pages/"
   },
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "tailwind-variants": "^0.2.1"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^1.3.5",
