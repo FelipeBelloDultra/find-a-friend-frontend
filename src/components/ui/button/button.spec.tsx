@@ -3,9 +3,15 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { Button } from "./button";
 import { styles } from "./button.style";
 
+import type { ButtonProps } from "./button";
+
+function renderButton(buttonProps?: ButtonProps) {
+  render(<Button {...buttonProps}>Click me</Button>);
+}
+
 describe("Button.tsx", () => {
   it("should renders primary button with default props", () => {
-    render(<Button>Click me</Button>);
+    renderButton();
 
     const sut = screen.getByRole("button");
 
@@ -14,7 +20,7 @@ describe("Button.tsx", () => {
   });
 
   it("should renders button with different size", () => {
-    render(<Button size="small">Click me</Button>);
+    renderButton({ size: "small" });
 
     const sut = screen.getByRole("button");
 
@@ -22,7 +28,7 @@ describe("Button.tsx", () => {
   });
 
   it("should renders button with different variant", () => {
-    render(<Button variant="secondary">Click me</Button>);
+    renderButton({ variant: "secondary" });
 
     const sut = screen.getByRole("button");
 
@@ -30,7 +36,7 @@ describe("Button.tsx", () => {
   });
 
   it("should renders disabled button", () => {
-    render(<Button isDisabled>Click me</Button>);
+    renderButton({ isDisabled: true });
 
     const sut = screen.getByRole("button");
 
@@ -38,7 +44,7 @@ describe("Button.tsx", () => {
   });
 
   it("should renders button with loading indicator", () => {
-    render(<Button isLoading>Loading</Button>);
+    renderButton({ isLoading: true });
 
     const sut = screen.getByRole("button");
 
@@ -47,7 +53,7 @@ describe("Button.tsx", () => {
   });
 
   it("should renders custom className", () => {
-    render(<Button className="custom-class">Click me</Button>);
+    renderButton({ className: "custom-class" });
 
     const sut = screen.getByRole("button");
 
@@ -56,7 +62,7 @@ describe("Button.tsx", () => {
 
   it("should emit click", () => {
     const clickFn = vi.fn();
-    render(<Button onClick={clickFn}>Button</Button>);
+    renderButton({ onClick: clickFn });
 
     const sut = screen.getByRole("button");
     fireEvent.click(sut);
@@ -66,14 +72,7 @@ describe("Button.tsx", () => {
 
   it("should not emit click if button is disabled", () => {
     const clickFn = vi.fn();
-    render(
-      <Button
-        onClick={clickFn}
-        isDisabled
-      >
-        Button
-      </Button>,
-    );
+    renderButton({ onClick: clickFn, isDisabled: true });
 
     const sut = screen.getByRole("button");
     fireEvent.click(sut);
@@ -83,14 +82,7 @@ describe("Button.tsx", () => {
 
   it("should not emit click if button is loading", () => {
     const clickFn = vi.fn();
-    render(
-      <Button
-        onClick={clickFn}
-        isLoading
-      >
-        Button
-      </Button>,
-    );
+    renderButton({ onClick: clickFn, isLoading: true });
 
     const sut = screen.getByRole("button");
     fireEvent.click(sut);

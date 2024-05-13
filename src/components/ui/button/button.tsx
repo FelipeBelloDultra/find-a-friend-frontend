@@ -1,5 +1,5 @@
-import { Loading } from "./loading";
 import { styles } from "./button.style";
+import { ButtonLoading } from "./atoms/button-loading";
 
 import type { ComponentProps } from "react";
 import type { ButtonVariantProps } from "./button.style";
@@ -34,7 +34,7 @@ export function Button({
       className={styles({ size, variant, className, isDisabled: shouldBlockButton })}
     >
       {isLoading ? (
-        <Loading
+        <ButtonLoading
           size={size}
           variant={variant}
         />

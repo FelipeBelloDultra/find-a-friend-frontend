@@ -1,10 +1,10 @@
-import type { ButtonVariantProps } from "./button.style";
+import type { ButtonVariantProps } from "~/components/ui/button/button.style";
 
 type ButtonSizes = Required<Pick<ButtonVariantProps, "size">>;
 type ButtonVariants = Required<Pick<ButtonVariantProps, "variant">>;
-type LoadingProps = ButtonSizes & ButtonVariants;
+type ButtonLoadingProps = ButtonSizes & ButtonVariants;
 
-export function Loading({ size, variant }: LoadingProps) {
+export function ButtonLoading({ size, variant }: ButtonLoadingProps) {
   const SIZE_MAPPINGS = {
     large: "h-3 w-3",
     medium: "h-2 w-2",
