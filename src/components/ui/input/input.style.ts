@@ -9,6 +9,9 @@ export const styles = tv({
       true: "border-2 border-red-400 focus:ring-red-400 bg-red-100",
       false: "border border-primary-900 bg-primary-800",
     },
+    isDisabled: {
+      true: "cursor-not-allowed",
+    },
   },
 });
 

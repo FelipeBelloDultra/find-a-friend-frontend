@@ -57,6 +57,16 @@ const meta: Meta<typeof Input> = {
       type: "string",
       description: "Custom class name",
     },
+    isDisabled: {
+      control: "boolean",
+      type: "boolean",
+      description: "Disabled input state",
+    },
+    hasError: {
+      control: "boolean",
+      type: "boolean",
+      description: "Input with error state",
+    },
   },
   render: RenderEmptyInput,
   args: {
@@ -64,6 +74,7 @@ const meta: Meta<typeof Input> = {
     name: "input-text",
     hasError: false,
     type: "text",
+    isDisabled: false,
   },
 };
 
@@ -110,5 +121,14 @@ export const InputWithErrorMessage: Story = {
     type: "password",
     placeholder: "Input password",
     name: "input-password-with-error-message",
+  },
+};
+export const InputDisabled: Story = {
+  render: (args) => RenderInputWithLabel(args, "Password")(),
+  args: {
+    isDisabled: true,
+    type: "password",
+    placeholder: "Input password",
+    name: "input-password-disabled",
   },
 };

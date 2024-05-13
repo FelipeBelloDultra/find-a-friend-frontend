@@ -9,6 +9,7 @@ export function InputLabel({ to, children }: PropsWithChildren<InputLabelProps>)
     <label
       className="w-full inline-block font-bold text-base mb-2 ml-1"
       htmlFor={to}
+      data-testid="input-label"
     >
       {children}
     </label>

@@ -1,4 +1,5 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
+import fireEvent from "@testing-library/user-event";
 
 import { Button } from "./button";
 import { styles } from "./button.style";
@@ -60,32 +61,32 @@ describe("Button.tsx", () => {
     expect(sut).toHaveClass("custom-class");
   });
 
-  it("should emit click", () => {
+  it("should emit click", async () => {
     const clickFn = vi.fn();
     renderButton({ onClick: clickFn });
 
     const sut = screen.getByRole("button");
-    fireEvent.click(sut);
+    await fireEvent.click(sut);
 
     expect(clickFn).toHaveBeenCalledTimes(1);
   });
 
-  it("should not emit click if button is disabled", () => {
+  it("should not emit click if button is disabled", async () => {
     const clickFn = vi.fn();
     renderButton({ onClick: clickFn, isDisabled: true });
 
     const sut = screen.getByRole("button");
-    fireEvent.click(sut);
+    await fireEvent.click(sut);
 
     expect(clickFn).not.toHaveBeenCalled();
   });
 
-  it("should not emit click if button is loading", () => {
+  it("should not emit click if button is loading", async () => {
     const clickFn = vi.fn();
     renderButton({ onClick: clickFn, isLoading: true });
 
     const sut = screen.getByRole("button");
-    fireEvent.click(sut);
+    await fireEvent.click(sut);
 
     expect(clickFn).not.toHaveBeenCalled();
   });
