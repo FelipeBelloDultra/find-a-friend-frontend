@@ -14,7 +14,7 @@ export function SignIn() {
           <FloatImgBackground />
         </span>
 
-        <article className="lg:pr-28 md:flex-shrink-0 md:ml-5">
+        <article className="lg:pr-28 md:flex-shrink-0 md:ml-5 w-full md:max-w-[420px] lg:max-w-lg">
           <section className="flex flex-col h-full">
             <div className="min-h-[calc(500px/2)] flex items-center">
               <h1 className="my-auto font-bold text-6xl -tracking-[2px]">{t("login.welcome")}</h1>
