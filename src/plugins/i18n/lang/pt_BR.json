@@ -14,6 +14,33 @@
         "btn_submit": "Login",
         "btn_register": "Cadastrar minha organização"
       }
+    },
+    "register": {
+      "welcome": "Cadastre sua organização",
+      "form": {
+        "input_owner_name": {
+          "label": "Nome do responsável",
+          "placeholder": "Antônio Bandeira"
+        },
+        "input_email": {
+          "label": "Email",
+          "placeholder": "nome@email.com"
+        },
+        "input_phone": {
+          "label": "WhatsApp",
+          "placeholder": "+55 (16) 99999-9999"
+        },
+        "input_password": {
+          "label": "Senha",
+          "placeholder": "Digite sua melhor senha"
+        },
+        "input_password_confirmation": {
+          "label": "Confirmar senha",
+          "placeholder": "Confirmar sua melhor senha"
+        },
+        "btn_submit": "Cadastrar",
+        "btn_has_account": "Já possui conta?"
+      }
     }
   }
 }
