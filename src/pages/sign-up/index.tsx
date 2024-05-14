@@ -22,7 +22,9 @@ export function SignUp() {
           </section>
         </article>
 
-        <FloatImgBackground />
+        <span>
+          <FloatImgBackground />
+        </span>
       </section>
     </div>
   );

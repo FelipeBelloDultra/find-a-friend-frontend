@@ -9,10 +9,12 @@ export function SignIn() {
 
   return (
     <div className="max-w-7xl w-full mx-auto px-8">
-      <section className="flex justify-between gap-32 py-20">
-        <FloatImgBackground />
+      <section className="flex md:justify-between justify-center py-20">
+        <span className="md:inline hidden">
+          <FloatImgBackground />
+        </span>
 
-        <article className="flex-1 pr-28">
+        <article className="lg:pr-28 md:flex-shrink-0 md:ml-5">
           <section className="flex flex-col h-full">
             <div className="min-h-[calc(500px/2)] flex items-center">
               <h1 className="my-auto font-bold text-6xl -tracking-[2px]">{t("login.welcome")}</h1>

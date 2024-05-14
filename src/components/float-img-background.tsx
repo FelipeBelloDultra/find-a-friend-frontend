@@ -3,7 +3,7 @@ import imgPets from "/public/imgs/pets.png";
 
 export function FloatImgBackground() {
   return (
-    <aside className="max-w-lg w-full sticky top-20 h-[740px]">
+    <aside className="max-w-lg w-full sticky top-20 lg:h-[740px] h-[500px]">
       <div className="h-full rounded-[20px] bg-secondary flex items-center flex-col justify-between pt-28 pb-20 px-14">
         <img
           src={svgLogoWhite}
