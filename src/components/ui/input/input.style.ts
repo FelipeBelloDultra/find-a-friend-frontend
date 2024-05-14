@@ -12,7 +12,10 @@ export const styles = tv({
     isDisabled: {
       true: "cursor-not-allowed",
     },
+    isPassword: {
+      true: "pr-16",
+    },
   },
 });
 
-export type InputVariantProps = VariantProps<typeof styles>;
+export type InputVariantProps = Omit<VariantProps<typeof styles>, "isPassword">;

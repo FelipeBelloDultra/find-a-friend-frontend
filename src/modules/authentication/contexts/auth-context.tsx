@@ -1,15 +1,15 @@
 import { createContext } from "react";
 
 import type { ReactNode } from "react";
-import type { AuthenticationGateway } from "~/gateway/authentication-gateway";
+import type { AuthGateway } from "../gateway/auth-gateway";
 
 interface AuthContextProps {
   children: ReactNode;
-  authGateway: AuthenticationGateway;
+  authGateway: AuthGateway;
 }
 
 interface AuthContextProviderData {
-  authGateway: AuthenticationGateway;
+  authGateway: AuthGateway;
 }
 
 export const AuthContextProvider = createContext({} as AuthContextProviderData);

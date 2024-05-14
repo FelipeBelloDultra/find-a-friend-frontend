@@ -39,6 +39,7 @@ function InputForwardedRef(
           className,
           isDisabled,
           hasError,
+          isPassword: type === "password",
         })}
       />
 

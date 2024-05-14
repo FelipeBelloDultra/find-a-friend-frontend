@@ -1,5 +1,17 @@
 {
   "translation": {
+    "validation": {
+      "email": "Insira um email válido",
+      "max": {
+        "password": "O campo senha deve ter no máximo {{maxSize}} caracteres",
+        "email": "O campo email deve ter no máximo {{maxSize}} caracteres"
+      },
+      "min": {
+        "password": "O campo senha deve ter no mínimo {{minSize}} caracteres",
+        "email": "O campo email deve ter no mínimo {{minSize}} caracteres"
+      }
+    },
+
     "login": {
       "welcome": "Boas-vindas!",
       "form": {

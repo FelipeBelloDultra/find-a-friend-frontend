@@ -1,3 +1,8 @@
+export interface AuthenticateProps {
+  email: string;
+  password: string;
+}
+
 export interface AuthGateway {
-  authenticate: () => Promise<string>;
+  authenticate: ({ email, password }: AuthenticateProps) => Promise<string>;
 }

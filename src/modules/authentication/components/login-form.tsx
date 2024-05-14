@@ -5,31 +5,38 @@ import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { SIGN_UP_ROUTE } from "~/router/constants";
 
+import { useSignIn } from "../hooks/use-sign-in";
+
 export function LoginForm() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const {
+    form: { errors, register, onSignInFormSubmit },
+  } = useSignIn();
 
   return (
-    <form>
+    <form onSubmit={onSignInFormSubmit()}>
       <span className="flex flex-col gap-4">
         <Input.Container>
           <Input.Label to="email">{t("login.form.input_email.label")}</Input.Label>
-          <Input
+          <Input.Root
             placeholder={t("login.form.input_email.placeholder")}
             type="email"
-            name="email"
+            hasError={!!errors.email?.message}
+            {...register("email")}
           />
-          <Input.Error />
+          <Input.Error message={errors.email?.message} />
         </Input.Container>
 
         <Input.Container>
           <Input.Label to="password">{t("login.form.input_password.placeholder")}</Input.Label>
-          <Input
+          <Input.Root
             placeholder={t("login.form.input_password.placeholder")}
             type="password"
-            name="password"
+            hasError={!!errors.password?.message}
+            {...register("password")}
           />
-          <Input.Error />
+          <Input.Error message={errors.password?.message} />
         </Input.Container>
       </span>
 
