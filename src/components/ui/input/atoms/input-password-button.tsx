@@ -17,6 +17,7 @@ export function InputPasswordButton({
     <span className="absolute right-4 top-0 h-full flex items-center justify-center">
       <button
         onClick={onInputPasswordButtonClicked}
+        type="button"
         className="rounded-md p-2"
       >
         {showPassword ? <Eye className={EYES_COLOR} /> : <EyeOff className={EYES_COLOR} />}
