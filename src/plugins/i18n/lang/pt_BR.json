@@ -1,0 +1,19 @@
+{
+  "translation": {
+    "login": {
+      "welcome": "Boas-vindas!",
+      "form": {
+        "input_email": {
+          "label": "Email",
+          "placeholder": "nome@email.com"
+        },
+        "input_password": {
+          "label": "Senha",
+          "placeholder": "Digite sua melhor senha"
+        },
+        "btn_submit": "Login",
+        "btn_register": "Cadastrar minha organização"
+      }
+    }
+  }
+}
