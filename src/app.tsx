@@ -1,15 +1,17 @@
 import { BrowserRouter } from "react-router-dom";
 
 import { Router } from "./router/router";
-import { AuthContext } from "./contexts/auth-context";
-import { makeAuthenticationGateway } from "./gateway/factories/make-authentication-gateway";
+import { AuthContext } from "./modules/authentication/contexts/auth-context";
+import { makeAuthGateway } from "./modules/authentication/factories/make-auth-gateway";
+import { HttpFetchAdapter } from "./infra/http/adapters/http-fetch-adapter";
 
-const authenticationGateway = makeAuthenticationGateway();
+const httpClient = new HttpFetchAdapter();
+const authenticationGateway = makeAuthGateway(httpClient);
 
 function App() {
   return (
     <BrowserRouter>
-      <AuthContext authenticationGateway={authenticationGateway}>
+      <AuthContext authGateway={authenticationGateway}>
         <Router />
       </AuthContext>
     </BrowserRouter>

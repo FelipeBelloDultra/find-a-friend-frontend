@@ -1,10 +1,7 @@
 import type { HttpProvider } from "~/providers/http-provider";
+import type { AuthGateway } from "../auth-gateway";
 
-export interface AuthenticationServiceProps {
-  authenticate: () => Promise<string>;
-}
-
-export class AuthenticationService implements AuthenticationServiceProps {
+export class HttpAuthGateway implements AuthGateway {
   constructor(private readonly httpProvider: HttpProvider) {}
 
   public async authenticate(): Promise<string> {

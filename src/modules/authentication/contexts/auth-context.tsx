@@ -5,19 +5,17 @@ import type { AuthenticationGateway } from "~/gateway/authentication-gateway";
 
 interface AuthContextProps {
   children: ReactNode;
-  authenticationGateway: AuthenticationGateway;
+  authGateway: AuthenticationGateway;
 }
 
 interface AuthContextProviderData {
-  authenticationGateway: AuthenticationGateway;
+  authGateway: AuthenticationGateway;
 }
 
 export const AuthContextProvider = createContext({} as AuthContextProviderData);
 
-export function AuthContext({ authenticationGateway, children }: AuthContextProps) {
+export function AuthContext({ authGateway, children }: AuthContextProps) {
   return (
-    <AuthContextProvider.Provider value={{ authenticationGateway }}>
-      {children}
-    </AuthContextProvider.Provider>
+    <AuthContextProvider.Provider value={{ authGateway }}>{children}</AuthContextProvider.Provider>
   );
 }

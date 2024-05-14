@@ -1,3 +1,3 @@
-export interface AuthenticationGateway {
+export interface AuthGateway {
   authenticate: () => Promise<string>;
 }

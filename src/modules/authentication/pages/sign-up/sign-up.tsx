@@ -1,8 +1,6 @@
 import { useTranslation } from "react-i18next";
 
-import { FloatImgBackground } from "~/components/float-img-background";
-
-import { RegisterForm } from "./components/register-form";
+import { FloatImgBackground, RegisterForm } from "../../components";
 
 export function SignUp() {
   const { t } = useTranslation();

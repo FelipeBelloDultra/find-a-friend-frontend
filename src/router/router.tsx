@@ -1,7 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 
-import { SignIn } from "~/pages/sign-in";
-import { SignUp } from "~/pages/sign-up";
+import { SignIn, SignUp } from "~/modules/authentication/pages";
 
 import { SIGN_IN_ROUTE, SIGN_UP_ROUTE } from "./constants";
 
