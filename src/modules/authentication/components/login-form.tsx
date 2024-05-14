@@ -29,7 +29,7 @@ export function LoginForm() {
         </Input.Container>
 
         <Input.Container>
-          <Input.Label to="password">{t("login.form.input_password.placeholder")}</Input.Label>
+          <Input.Label to="password">{t("login.form.input_password.label")}</Input.Label>
           <Input.Root
             placeholder={t("login.form.input_password.placeholder")}
             type="password"

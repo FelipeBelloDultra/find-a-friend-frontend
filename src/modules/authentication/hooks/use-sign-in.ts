@@ -4,6 +4,7 @@ import { z } from "zod";
 import { t } from "i18next";
 
 import { UnauthorizedHttpError } from "~/infra/http/errors/unauthorized-http-error";
+import { ValidationHttpError } from "~/infra/http/errors/validation-http-error";
 
 import { useAuth } from "../hooks/use-auth";
 
@@ -44,6 +45,7 @@ export function useSignIn() {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm<SignInFormSchema>({
     resolver: zodResolver(schema),
@@ -56,9 +58,19 @@ export function useSignIn() {
       console.log(value);
     } catch (error) {
       if (error instanceof UnauthorizedHttpError) {
-        console.log("error de autorization");
-        console.log(error.message);
-        console.log(error.statusCode);
+        console.log(error);
+        return;
+      }
+
+      if (error instanceof ValidationHttpError) {
+        Object.entries(error.issues).forEach(([key, value]) => {
+          if (key === "email" || key === "password") {
+            setError(key, {
+              message: value[0],
+            });
+          }
+        });
+        return;
       }
     }
   }

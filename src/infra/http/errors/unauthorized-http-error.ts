@@ -1,10 +1,9 @@
-export class UnauthorizedHttpError extends Error {
-  public readonly statusCode: number;
+import { HttpError } from "./http-error";
 
+export class UnauthorizedHttpError extends HttpError {
   constructor() {
-    super("Unauthorized.");
+    super(401, "Unauthorized.");
 
     this.name = UnauthorizedHttpError.name;
-    this.statusCode = 401;
   }
 }

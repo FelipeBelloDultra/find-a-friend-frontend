@@ -1,5 +1,8 @@
+import { InternalHttpError } from "../errors/internal-http-error";
 import { UnauthorizedHttpError } from "../errors/unauthorized-http-error";
+import { ValidationHttpError } from "../errors/validation-http-error";
 
+import type { ValidationIssues } from "../errors/validation-http-error";
 import type { HttpProvider } from "../http-client";
 interface HeaderOptions {
   [key: string]: string;
@@ -59,6 +62,19 @@ export class HttpFetchAdapter implements HttpProvider {
 
     if (response.status === 401) {
       throw new UnauthorizedHttpError();
+    }
+
+    if (response.status === 422) {
+      const data = (await response.json()) as {
+        message: string;
+        issues: ValidationIssues;
+      };
+
+      throw new ValidationHttpError(data.issues);
+    }
+
+    if (response.status === 500) {
+      throw new InternalHttpError();
     }
 
     throw new Error();
