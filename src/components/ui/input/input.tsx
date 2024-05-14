@@ -1,12 +1,9 @@
-import { useState } from "react";
+import { forwardRef, useState } from "react";
 
 import { styles } from "./input.style";
-import { InputLabel } from "./atoms/input-label";
-import { InputContainer } from "./atoms/input-container";
-import { InputPasswordButton } from "./atoms/input-password-button";
-import { InputError } from "./atoms/input-error";
+import { InputPasswordButton } from "./atoms";
 
-import type { ComponentProps } from "react";
+import type { ComponentProps, ForwardedRef } from "react";
 
 export interface InputProps extends ComponentProps<"input"> {
   type?: "text" | "password" | "email";
@@ -15,15 +12,10 @@ export interface InputProps extends ComponentProps<"input"> {
   isDisabled?: boolean;
 }
 
-export function Input({
-  type = "text",
-  hasError = false,
-  isDisabled = false,
-  name,
-  id,
-  className,
-  ...rest
-}: InputProps) {
+function InputForwardedRef(
+  { type = "text", hasError = false, isDisabled = false, name, id, className, ...rest }: InputProps,
+  ref: ForwardedRef<HTMLInputElement>,
+) {
   const [showPassword, setShowPassword] = useState(false);
 
   function handleToggleShowPassword() {
@@ -36,6 +28,7 @@ export function Input({
     >
       <input
         {...rest}
+        ref={ref}
         type={showPassword ? "text" : type}
         name={name}
         disabled={isDisabled}
@@ -60,6 +53,6 @@ export function Input({
   );
 }
 
-Input.Label = InputLabel;
-Input.Container = InputContainer;
-Input.Error = InputError;
+export const Input = forwardRef<HTMLInputElement, InputProps>(InputForwardedRef);
+
+Input.displayName = "InputRoot";

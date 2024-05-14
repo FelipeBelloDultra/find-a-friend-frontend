@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import fireEvent from "@testing-library/user-event";
 
-import { Input } from "./input";
+import { Input } from ".";
 
 import type { InputProps } from "./input";
 
@@ -11,7 +11,7 @@ function renderInput(inputProps: InputProps, label?: string, errorMessage?: stri
   render(
     <Input.Container>
       {label && <Input.Label to={name}>{label}</Input.Label>}
-      <Input
+      <Input.Root
         hasError={!!errorMessage}
         {...rest}
         name={name}

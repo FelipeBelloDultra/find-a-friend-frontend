@@ -1,12 +1,14 @@
 import { Input } from "./input";
 
+import { Input as InputComponent } from ".";
+
 import type { Meta, StoryObj } from "@storybook/react";
 import type { InputProps } from "./input";
 
 function RenderEmptyInput(props: InputProps) {
   return (
     <div className="w-[400px]">
-      <Input {...props} />
+      <InputComponent.Root {...props} />
     </div>
   );
 }
@@ -14,10 +16,10 @@ function RenderEmptyInput(props: InputProps) {
 function RenderInputWithLabel(props: InputProps, label?: string) {
   return () => (
     <div className="w-[400px]">
-      <Input.Container>
-        <Input.Label to={props.name}>{label ?? "Input with label"}</Input.Label>
-        <Input {...props} />
-      </Input.Container>
+      <InputComponent.Container>
+        <InputComponent.Label to={props.name}>{label ?? "Input with label"}</InputComponent.Label>
+        <InputComponent.Root {...props} />
+      </InputComponent.Container>
     </div>
   );
 }
@@ -25,11 +27,11 @@ function RenderInputWithLabel(props: InputProps, label?: string) {
 function RenderInputWithErrorMessage(props: InputProps, errorMessage?: string) {
   return () => (
     <div className="w-[400px]">
-      <Input.Container>
-        <Input.Label to={props.name}>Label</Input.Label>
-        <Input {...props} />
-        <Input.Error message={errorMessage} />
-      </Input.Container>
+      <InputComponent.Container>
+        <InputComponent.Label to={props.name}>Label</InputComponent.Label>
+        <InputComponent.Root {...props} />
+        <InputComponent.Error message={errorMessage} />
+      </InputComponent.Container>
     </div>
   );
 }

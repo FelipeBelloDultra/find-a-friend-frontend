@@ -25,7 +25,7 @@ export function RegisterForm() {
       <span className="flex flex-col gap-4">
         <Input.Container>
           <Input.Label to="owner_name">{t("register.form.input_owner_name.label")}</Input.Label>
-          <Input
+          <Input.Root
             placeholder={t("register.form.input_owner_name.placeholder")}
             type="text"
             name="owner_name"
@@ -35,7 +35,7 @@ export function RegisterForm() {
 
         <Input.Container>
           <Input.Label to="email">{t("register.form.input_email.label")}</Input.Label>
-          <Input
+          <Input.Root
             placeholder={t("register.form.input_email.placeholder")}
             type="email"
             name="email"
@@ -45,7 +45,7 @@ export function RegisterForm() {
 
         <Input.Container>
           <Input.Label to="phone">{t("register.form.input_phone.label")}</Input.Label>
-          <Input
+          <Input.Root
             placeholder={t("register.form.input_phone.placeholder")}
             type="text"
             name="phone"
@@ -55,7 +55,7 @@ export function RegisterForm() {
 
         <Input.Container>
           <Input.Label to="password">{t("register.form.input_password.label")}</Input.Label>
-          <Input
+          <Input.Root
             placeholder={t("register.form.input_password.placeholder")}
             type="password"
             name="password"
@@ -67,7 +67,7 @@ export function RegisterForm() {
           <Input.Label to="password_confirmation">
             {t("register.form.input_password_confirmation.label")}
           </Input.Label>
-          <Input
+          <Input.Root
             placeholder={t("register.form.input_password_confirmation.placeholder")}
             type="password"
             name="password_confirmation"
