@@ -4,13 +4,24 @@ import { useTranslation } from "react-i18next";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { SIGN_IN_ROUTE } from "~/router/constants";
+import { useAuth } from "~/hooks/use-auth";
+
+import type { FormEvent } from "react";
 
 export function RegisterForm() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { authenticationGateway } = useAuth();
+
+  async function handleSubmitForm(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const result = await authenticationGateway.authenticate();
+
+    console.log(result);
+  }
 
   return (
-    <form>
+    <form onSubmit={handleSubmitForm}>
       <span className="flex flex-col gap-4">
         <Input.Container>
           <Input.Label to="owner_name">{t("register.form.input_owner_name.label")}</Input.Label>
