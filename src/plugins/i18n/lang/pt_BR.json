@@ -21,6 +21,17 @@
     "login": {
       "welcome": "Boas-vindas!",
       "form": {
+        "error": {
+          "internal": {
+            "title": "Algo inesperado acontenceu, tente novamente mais tarde"
+          },
+          "unauthorized": {
+            "title": "Email ou senha inválidos"
+          },
+          "validation": {
+            "title": "Confira os campos e tente novamente"
+          }
+        },
         "success": {
           "title": "Login realizado com sucesso!"
         },

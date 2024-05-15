@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { t } from "i18next";
 
-import { InternalHttpError, UnauthorizedHttpError, ValidationHttpError } from "~/infra/http/errors";
+import { UnauthorizedHttpError, ValidationHttpError } from "~/infra/http/errors";
 import { useToast } from "~/hooks/use-toast";
 
 import { useAuth } from "../hooks/use-auth";
@@ -64,7 +64,10 @@ export function useSignIn() {
     },
     onError: (error) => {
       if (error instanceof UnauthorizedHttpError) {
-        console.log(error);
+        addToast({
+          message: t("login.form.error.unauthorized.title"),
+          type: "error",
+        });
         return;
       }
 
@@ -76,12 +79,17 @@ export function useSignIn() {
             });
           }
         });
+        addToast({
+          message: t("login.form.error.validation.title"),
+          type: "error",
+        });
         return;
       }
 
-      if (error instanceof InternalHttpError) {
-        console.log({ error });
-      }
+      addToast({
+        message: t("login.form.error.internal.title"),
+        type: "error",
+      });
     },
   });
 
