@@ -8,11 +8,9 @@ import { SIGN_UP_ROUTE } from "~/router/constants";
 import { useSignIn } from "../hooks/use-sign-in";
 
 export function LoginForm() {
-  const { t } = useTranslation();
   const navigate = useNavigate();
-  const {
-    form: { errors, register, onSignInFormSubmit },
-  } = useSignIn();
+  const { t } = useTranslation();
+  const { errors, register, onSignInFormSubmit, isLoading } = useSignIn();
 
   return (
     <form onSubmit={onSignInFormSubmit()}>
@@ -41,9 +39,15 @@ export function LoginForm() {
       </span>
 
       <span className="flex flex-col gap-4 mt-11">
-        <Button type="submit">{t("login.form.btn_submit")}</Button>
+        <Button
+          type="submit"
+          isLoading={isLoading}
+        >
+          {t("login.form.btn_submit")}
+        </Button>
 
         <Button
+          isDisabled={isLoading}
           onClick={() => navigate(SIGN_UP_ROUTE)}
           variant="secondary"
           type="button"

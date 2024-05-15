@@ -1,10 +1,10 @@
+import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { t } from "i18next";
 
-import { UnauthorizedHttpError } from "~/infra/http/errors/unauthorized-http-error";
-import { ValidationHttpError } from "~/infra/http/errors/validation-http-error";
+import { InternalHttpError, UnauthorizedHttpError, ValidationHttpError } from "~/infra/http/errors";
 
 import { useAuth } from "../hooks/use-auth";
 
@@ -51,12 +51,12 @@ export function useSignIn() {
     resolver: zodResolver(schema),
   });
   const { authGateway } = useAuth();
-
-  async function submitForm(data: SignInFormSchema) {
-    try {
-      const value = await authGateway.authenticate(data);
-      console.log(value);
-    } catch (error) {
+  const { mutate, isPending } = useMutation({
+    mutationFn: (data: SignInFormSchema) => authGateway.authenticate(data),
+    onSuccess: (value) => {
+      console.log({ value });
+    },
+    onError: (error) => {
       if (error instanceof UnauthorizedHttpError) {
         console.log(error);
         return;
@@ -72,18 +72,26 @@ export function useSignIn() {
         });
         return;
       }
-    }
-  }
+
+      if (error instanceof InternalHttpError) {
+        console.log({ error });
+      }
+    },
+  });
 
   function onSignInFormSubmit() {
-    return handleSubmit(submitForm);
+    return handleSubmit((data) =>
+      mutate({
+        email: data.email,
+        password: data.password,
+      }),
+    );
   }
 
   return {
-    form: {
-      errors,
-      register,
-      onSignInFormSubmit,
-    },
+    errors,
+    isLoading: isPending,
+    register,
+    onSignInFormSubmit,
   };
 }

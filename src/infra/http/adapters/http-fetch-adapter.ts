@@ -1,6 +1,4 @@
-import { InternalHttpError } from "../errors/internal-http-error";
-import { UnauthorizedHttpError } from "../errors/unauthorized-http-error";
-import { ValidationHttpError } from "../errors/validation-http-error";
+import { InternalHttpError, UnauthorizedHttpError, ValidationHttpError } from "../errors";
 
 import type { ValidationIssues } from "../errors/validation-http-error";
 import type { HttpProvider } from "../http-client";
