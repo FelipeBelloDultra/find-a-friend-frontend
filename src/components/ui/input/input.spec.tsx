@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import fireEvent from "@testing-library/user-event";
+import { userEvent } from "@testing-library/user-event";
 
 import { Input } from ".";
 
@@ -48,7 +48,7 @@ describe("Input.tsx", () => {
     renderInput({ name: "input-test-3" }, "label");
 
     const sut = screen.getByRole("textbox");
-    await fireEvent.click(screen.getByTestId("input-label"));
+    await userEvent.click(screen.getByTestId("input-label"));
 
     expect(sut.matches(":focus")).toBeTruthy();
   });
@@ -66,7 +66,7 @@ describe("Input.tsx", () => {
 
     const sut = screen.getByRole("textbox");
     sut.focus();
-    await fireEvent.keyboard(FINAL_VALUE);
+    await userEvent.keyboard(FINAL_VALUE);
 
     expect(spyFn).toBeCalledTimes(FINAL_VALUE.length);
     expect(sut).toHaveValue(FINAL_VALUE);
@@ -117,7 +117,7 @@ describe("Input.tsx", () => {
 
     const sut = screen.getByRole("textbox");
     sut.focus();
-    await fireEvent.keyboard("testing");
+    await userEvent.keyboard("testing");
 
     expect(spyFn).not.toHaveBeenCalled();
   });

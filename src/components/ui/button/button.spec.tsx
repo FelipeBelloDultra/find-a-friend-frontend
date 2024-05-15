@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import fireEvent from "@testing-library/user-event";
+import { userEvent } from "@testing-library/user-event";
 
 import { Button } from "./button";
 import { styles } from "./button.style";
@@ -66,7 +66,7 @@ describe("Button.tsx", () => {
     renderButton({ onClick: clickFn });
 
     const sut = screen.getByRole("button");
-    await fireEvent.click(sut);
+    await userEvent.click(sut);
 
     expect(clickFn).toHaveBeenCalledTimes(1);
   });
@@ -76,7 +76,7 @@ describe("Button.tsx", () => {
     renderButton({ onClick: clickFn, isDisabled: true });
 
     const sut = screen.getByRole("button");
-    await fireEvent.click(sut);
+    await userEvent.click(sut);
 
     expect(clickFn).not.toHaveBeenCalled();
   });
@@ -86,7 +86,7 @@ describe("Button.tsx", () => {
     renderButton({ onClick: clickFn, isLoading: true });
 
     const sut = screen.getByRole("button");
-    await fireEvent.click(sut);
+    await userEvent.click(sut);
 
     expect(clickFn).not.toHaveBeenCalled();
   });
