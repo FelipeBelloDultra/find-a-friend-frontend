@@ -5,6 +5,7 @@ import { Router } from "./router/router";
 import { AuthContext } from "./modules/authentication/contexts/auth-context";
 import { makeAuthGateway } from "./modules/authentication/factories/make-auth-gateway";
 import { HttpFetchAdapter } from "./infra/http/adapters/http-fetch-adapter";
+import { ToastContainer } from "./components/ui/toast/toast-container";
 
 const reactQueryClient = new QueryClient();
 const httpClient = new HttpFetchAdapter();
@@ -16,6 +17,8 @@ function App() {
       <AuthContext authGateway={authenticationGateway}>
         <QueryClientProvider client={reactQueryClient}>
           <Router />
+
+          <ToastContainer />
         </QueryClientProvider>
       </AuthContext>
     </BrowserRouter>

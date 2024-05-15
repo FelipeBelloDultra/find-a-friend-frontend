@@ -5,6 +5,7 @@ import { z } from "zod";
 import { t } from "i18next";
 
 import { InternalHttpError, UnauthorizedHttpError, ValidationHttpError } from "~/infra/http/errors";
+import { useToast } from "~/hooks/use-toast";
 
 import { useAuth } from "../hooks/use-auth";
 
@@ -50,10 +51,15 @@ export function useSignIn() {
   } = useForm<SignInFormSchema>({
     resolver: zodResolver(schema),
   });
+  const { addToast } = useToast();
   const { authGateway } = useAuth();
   const { mutate, isPending } = useMutation({
     mutationFn: (data: SignInFormSchema) => authGateway.authenticate(data),
     onSuccess: (value) => {
+      addToast({
+        message: t("login.form.success.title"),
+        type: "success",
+      });
       console.log({ value });
     },
     onError: (error) => {

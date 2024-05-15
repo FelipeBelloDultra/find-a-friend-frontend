@@ -1,5 +1,12 @@
 {
   "translation": {
+    "notification": {
+      "toast": {
+        "error": "Ops...",
+        "success": "Sucesso!",
+        "info": "Atenção..."
+      }
+    },
     "validation": {
       "email": "Insira um email válido",
       "max": {
@@ -11,10 +18,12 @@
         "email": "O campo email deve ter no mínimo {{minSize}} caracteres"
       }
     },
-
     "login": {
       "welcome": "Boas-vindas!",
       "form": {
+        "success": {
+          "title": "Login realizado com sucesso!"
+        },
         "input_email": {
           "label": "Email",
           "placeholder": "nome@email.com"

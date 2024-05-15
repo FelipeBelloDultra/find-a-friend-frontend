@@ -8,6 +8,5 @@ i18n.use(initReactI18next).init({
     pt_BR: pt_BR,
   },
   interpolation: { escapeValue: false },
-  debug: true,
   lng: "pt_BR",
 });
