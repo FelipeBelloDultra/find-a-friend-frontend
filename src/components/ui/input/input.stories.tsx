@@ -48,6 +48,11 @@ const meta: Meta<typeof Input> = {
       control: "select",
       options: ["text", "password", "email"],
       description: "Input type",
+      table: {
+        type: {
+          summary: "text, password, email",
+        },
+      },
     },
     name: {
       control: "text",

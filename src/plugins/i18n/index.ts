@@ -10,3 +10,5 @@ i18n.use(initReactI18next).init({
   interpolation: { escapeValue: false },
   lng: "pt_BR",
 });
+
+export default i18n;

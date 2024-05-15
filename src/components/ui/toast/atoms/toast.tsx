@@ -9,7 +9,7 @@ export interface ToastData {
   type: "error" | "success" | "info";
 }
 
-interface ToastProps {
+export interface ToastProps {
   toast: ToastData;
   onToastButtonClicked: () => void;
 }
@@ -36,14 +36,14 @@ const TOAST_TITLE: Record<ToastData["type"], string> = {
 };
 
 export function Toast({ toast, onToastButtonClicked }: ToastProps) {
-  const Icon = TOAST_ICONS[toast.type];
+  const Icon = TOAST_ICONS[toast.type || "info"];
 
   return (
     <div
-      data-toast-type={toast.type}
+      data-toast-type={toast.type || "info"}
       data-toast-id={toast.id}
       className={styles({
-        type: toast.type,
+        type: toast.type || "info",
         class: "px-4 py-3 rounded-[10px] flex gap-2 shadow-md self-end md:max-w-full max-w-[300px]",
       })}
     >
@@ -54,7 +54,7 @@ export function Toast({ toast, onToastButtonClicked }: ToastProps) {
       />
 
       <div className="max-w-[350px] min-w-[150px] flex flex-col gap-1 break-words">
-        <strong className="text-lg">{TOAST_TITLE[toast.type]}</strong>
+        <strong className="text-lg">{TOAST_TITLE[toast.type || "info"]}</strong>
 
         <small className="text-base">{toast.message}</small>
       </div>

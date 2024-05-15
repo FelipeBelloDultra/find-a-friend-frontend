@@ -31,6 +31,11 @@ const meta: Meta<typeof Button> = {
       type: "string",
       description: "Variant to be defined",
       options: ["primary", "secondary", "tertiary"],
+      table: {
+        type: {
+          summary: "primary, secondary, tertiary",
+        },
+      },
     },
     isDisabled: {
       control: "boolean",
@@ -47,6 +52,11 @@ const meta: Meta<typeof Button> = {
       type: "string",
       description: "Size to be defined",
       options: ["large", "medium", "small"],
+      table: {
+        type: {
+          summary: "large, medium, small",
+        },
+      },
     },
   },
   args: {
