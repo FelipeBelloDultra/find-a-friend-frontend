@@ -12,8 +12,8 @@
     "lint:check": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0 --fix",
     "preview": "vite preview",
-    "test:components": "vitest run src/components/ src/pages/",
-    "test:components:watch": "vitest src/components/ src/pages/"
+    "test:components": "vitest run --exclude **/*.spec.ts",
+    "test:components:watch": "vitest  --exclude **/*.spec.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
