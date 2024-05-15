@@ -40,6 +40,7 @@ export function Toast({ toast, onToastButtonClicked }: ToastProps) {
 
   return (
     <div
+      data-testid="toast"
       data-toast-type={toast.type || "info"}
       data-toast-id={toast.id}
       className={styles({
@@ -48,6 +49,7 @@ export function Toast({ toast, onToastButtonClicked }: ToastProps) {
       })}
     >
       <Icon
+        data-testid={`toast-icon-${toast.type || "info"}`}
         className="self-start flex-shrink-0 mr-1 md:inline-block hidden"
         height={26}
         width={26}
@@ -60,6 +62,7 @@ export function Toast({ toast, onToastButtonClicked }: ToastProps) {
       </div>
 
       <button
+        data-testid="toast-button"
         onClick={onToastButtonClicked}
         className="rounded-md p-1 self-start flex-shrink-0"
       >
