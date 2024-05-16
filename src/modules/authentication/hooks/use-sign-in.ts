@@ -8,6 +8,7 @@ import { UnauthorizedHttpError, ValidationHttpError } from "~/infra/http/errors"
 import { useToast } from "~/hooks/use-toast";
 
 import { useAuth } from "../hooks/use-auth";
+import { useAuthStore } from "../store/auth-store";
 
 const schema = z.object({
   email: z
@@ -53,45 +54,50 @@ export function useSignIn() {
   });
   const { addToast } = useToast();
   const { authGateway } = useAuth();
+  const { setToken } = useAuthStore();
   const { mutate, isPending } = useMutation({
     mutationFn: (data: SignInFormSchema) => authGateway.authenticate(data),
-    onSuccess: (value) => {
-      addToast({
-        message: t("login.form.success.title"),
-        type: "success",
-      });
-      console.log({ value });
-    },
-    onError: (error) => {
-      if (error instanceof UnauthorizedHttpError) {
-        addToast({
-          message: t("login.form.error.unauthorized.title"),
-          type: "error",
-        });
-        return;
-      }
+    onSuccess: onSuccessRequest,
+    onError: onErrorRequest,
+  });
 
-      if (error instanceof ValidationHttpError) {
-        Object.entries(error.issues).forEach(([key, value]) => {
-          if (key === "email" || key === "password") {
-            setError(key, {
-              message: value[0],
-            });
-          }
-        });
-        addToast({
-          message: t("login.form.error.validation.title"),
-          type: "error",
-        });
-        return;
-      }
+  function onSuccessRequest(token: string) {
+    addToast({
+      message: t("login.form.success.title"),
+      type: "success",
+    });
+    setToken(token);
+  }
 
+  function onErrorRequest(error: Error) {
+    if (error instanceof UnauthorizedHttpError) {
       addToast({
-        message: t("login.form.error.internal.title"),
+        message: t("login.form.error.unauthorized.title"),
         type: "error",
       });
-    },
-  });
+      return;
+    }
+
+    if (error instanceof ValidationHttpError) {
+      Object.entries(error.issues).forEach(([key, value]) => {
+        if (key === "email" || key === "password") {
+          setError(key, {
+            message: value[0],
+          });
+        }
+      });
+      addToast({
+        message: t("login.form.error.validation.title"),
+        type: "error",
+      });
+      return;
+    }
+
+    addToast({
+      message: t("login.form.error.internal.title"),
+      type: "error",
+    });
+  }
 
   function onSignInFormSubmit() {
     return handleSubmit((data) =>
