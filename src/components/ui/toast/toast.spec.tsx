@@ -1,5 +1,6 @@
-import { act, fireEvent, render, screen, within } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
+import { Globals } from "@react-spring/web";
 
 import { ADD_TOAST_EVENT_NAME } from "~/hooks/use-toast";
 
@@ -18,6 +19,12 @@ function addToast() {
 }
 
 describe("Toast.tsx", () => {
+  beforeAll(() => {
+    Globals.assign({
+      skipAnimation: true,
+    });
+  });
+
   it("should add a toast inside the container", () => {
     render(<ToastContainer />);
     addToast();
@@ -83,13 +90,16 @@ describe("Toast.tsx", () => {
     vi.useFakeTimers();
     render(<ToastContainer />);
     addToast();
+
     const sut = screen.getByTestId("toast-container");
 
     act(() => {
-      vi.advanceTimersByTime(5000);
+      vi.advanceTimersByTime(4000);
     });
 
-    expect(sut.children.length).toBe(0);
-    vi.useRealTimers();
+    await waitFor(() => {
+      expect(sut.children.length).toBe(0);
+      vi.useRealTimers();
+    });
   });
 });

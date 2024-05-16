@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { animated, useTransition } from "@react-spring/web";
 
 import { ADD_TOAST_EVENT_NAME } from "~/hooks/use-toast";
 
@@ -11,6 +12,11 @@ export type AddToast = Optional<Omit<ToastData, "id">, "duration" | "type">;
 
 export function ToastContainer() {
   const [toasts, setToasts] = useState<Array<ToastData>>([]);
+  const transtions = useTransition(toasts, {
+    from: { opacity: 0, maxHeight: 0 },
+    enter: { opacity: 1, maxHeight: 200 },
+    leave: { opacity: 0, maxHeight: 0 },
+  });
 
   function handleAddToastEvent(event: CustomEvent<AddToast>) {
     const { detail } = event;
@@ -21,7 +27,7 @@ export function ToastContainer() {
       {
         id,
         type: detail.type || "info",
-        duration: detail.duration || 1000 * 5, // 5 seconds,
+        duration: detail.duration || 1000 * 3, // 3 seconds
         message: detail.message,
       },
     ]);
@@ -45,12 +51,19 @@ export function ToastContainer() {
       data-testid="toast-container"
       className="fixed z-50 top-6 right-2 md:top-12 md:right-12 flex flex-col gap-2"
     >
-      {toasts.map((toast) => (
-        <ToastItem
-          key={toast.id}
-          toast={toast}
-          onRemoveToast={removeToast}
-        />
+      {transtions(({ maxHeight, opacity }, item) => (
+        <animated.div
+          style={{
+            maxHeight,
+            opacity,
+            alignSelf: "end",
+          }}
+        >
+          <ToastItem
+            onRemoveToast={removeToast}
+            toast={item}
+          />
+        </animated.div>
       ))}
     </div>
   );
