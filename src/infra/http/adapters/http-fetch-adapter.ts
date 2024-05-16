@@ -51,7 +51,7 @@ export class HttpFetchAdapter implements HttpClient {
       method: options.method,
       body: JSON.stringify(options.body),
       headers,
-      credentials: "same-origin",
+      credentials: "include",
     });
 
     if (response.ok) {
