@@ -1,7 +1,7 @@
 import { InternalHttpError, UnauthorizedHttpError, ValidationHttpError } from "../errors";
 
 import type { ValidationIssues } from "../errors/validation-http-error";
-import type { HttpProvider } from "../http-client";
+import type { HttpClient } from "../http-client";
 interface HeaderOptions {
   [key: string]: string;
 }
@@ -12,7 +12,7 @@ interface HttpOptions<RequestBody = unknown> {
   method: "GET" | "POST" | "PUT" | "DELETE";
 }
 
-export class HttpFetchAdapter implements HttpProvider {
+export class HttpFetchAdapter implements HttpClient {
   private readonly BASE_URL = import.meta.env.VITE_API_URL;
 
   public async get<Response>(url: string): Promise<Response> {
