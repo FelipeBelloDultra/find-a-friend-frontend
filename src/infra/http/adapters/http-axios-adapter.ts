@@ -22,7 +22,7 @@ export class HttpAxiosAdapter implements HttpClient {
 
   constructor() {
     this.axiosClient.interceptors.response.use(
-      (response) => response,
+      (response) => response.data,
       async (error) => {
         const errorInstance = this.handleAxiosError(error);
 
@@ -48,7 +48,7 @@ export class HttpAxiosAdapter implements HttpClient {
   }
 
   private async makeRequest<RequestBody, Response>(path: string, options: Options<RequestBody>) {
-    const response = await this.axiosClient<RequestBody, { data: Response }>({
+    const response = await this.axiosClient<RequestBody, Response>({
       url: path,
       method: options.method,
       data: options.body,
@@ -59,29 +59,29 @@ export class HttpAxiosAdapter implements HttpClient {
       withCredentials: true,
     });
 
-    return response.data;
+    return response;
   }
 
   private handleAxiosError(error: unknown) {
     if (
       !(error instanceof AxiosError) ||
-      !error.status ||
-      error.status === HttpStatusCode.InternalServerError
+      !error.response?.status ||
+      error.response.status === HttpStatusCode.InternalServerError
     ) {
       return new InternalError();
     }
 
-    if (error.status === HttpStatusCode.Unauthorized) {
+    if (error.response.status === HttpStatusCode.Unauthorized) {
       return new UnauthorizedError();
     }
 
-    if (error.status === HttpStatusCode.UnprocessableEntity) {
+    if (error.response.status === HttpStatusCode.UnprocessableEntity) {
       const issues = error?.response?.data?.issues || {};
 
       return new UnprocessableError(issues);
     }
 
-    if (error.status === HttpStatusCode.Conflict) {
+    if (error.response.status === HttpStatusCode.Conflict) {
       const issues = error?.response?.data?.issues || {};
 
       return new ConflictError(issues);
