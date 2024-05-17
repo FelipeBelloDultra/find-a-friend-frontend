@@ -6,20 +6,26 @@ import { AuthContext } from "./modules/authentication/contexts/auth-context";
 import { makeAuthGateway } from "./modules/authentication/factories/make-auth-gateway";
 import { HttpFetchAdapter } from "./infra/http/adapters/http-fetch-adapter";
 import { ToastContainer } from "./components/ui/toast/toast-container";
+import { makeOrganizationGateway } from "./modules/organization/factories/make-organization-gateway";
+import { OrganizationContext } from "./modules/organization/contexts/organization-context";
 
 const reactQueryClient = new QueryClient();
 const httpClient = new HttpFetchAdapter();
+
 const authenticationGateway = makeAuthGateway(httpClient);
+const organizationGateway = makeOrganizationGateway(httpClient);
 
 function App() {
   return (
     <BrowserRouter>
       <AuthContext authGateway={authenticationGateway}>
-        <QueryClientProvider client={reactQueryClient}>
-          <Router />
+        <OrganizationContext organizationGateway={organizationGateway}>
+          <QueryClientProvider client={reactQueryClient}>
+            <Router />
 
-          <ToastContainer />
-        </QueryClientProvider>
+            <ToastContainer />
+          </QueryClientProvider>
+        </OrganizationContext>
       </AuthContext>
     </BrowserRouter>
   );
