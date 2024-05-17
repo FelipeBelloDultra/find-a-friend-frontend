@@ -18,4 +18,10 @@ export class HttpAuthGateway implements AuthGateway {
 
     return token;
   }
+
+  public async me(): Promise<unknown> {
+    const value = await this.httpClient.get<unknown>("/api/auth/me");
+
+    return value;
+  }
 }

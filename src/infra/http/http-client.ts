@@ -8,4 +8,5 @@ export interface HttpClient {
     url: string,
     data?: RequestBody,
   ) => Promise<Response>;
+  setHeader: (key: string, value: string) => void;
 }

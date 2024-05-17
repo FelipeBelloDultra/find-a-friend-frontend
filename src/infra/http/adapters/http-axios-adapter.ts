@@ -5,13 +5,11 @@ import { HttpStatusCode } from "../http-status-code";
 
 import type { HttpClient } from "../http-client";
 
-interface HeaderOptions {
-  [key: string]: string;
-}
-
 interface Options<RequestBody = unknown> {
   body?: RequestBody;
-  headers?: HeaderOptions;
+  headers?: {
+    [key: string]: string;
+  };
   method: "GET" | "POST" | "PATCH";
 }
 
@@ -55,6 +53,12 @@ export class HttpAxiosAdapter implements HttpClient {
       method: "PATCH",
       body: data,
     });
+  }
+
+  public setHeader(key: string, value: string): void {
+    this.axiosClient.defaults.headers.common = {
+      [key]: value,
+    };
   }
 
   private async makeRequest<RequestBody, Response>(path: string, options: Options<RequestBody>) {
