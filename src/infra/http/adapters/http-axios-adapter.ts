@@ -16,19 +16,15 @@ interface Options<RequestBody = unknown> {
 }
 
 export class HttpAxiosAdapter implements HttpClient {
-  static readonly axiosClient = axios.create({
+  private readonly axiosClient = axios.create({
     baseURL: import.meta.env.VITE_API_URL,
   });
 
   constructor() {
-    HttpAxiosAdapter.axiosClient.interceptors.response.use(
+    this.axiosClient.interceptors.response.use(
       (response) => response.data,
       async (error) => {
         const errorInstance = this.handleAxiosError(error);
-
-        // if (errorInstance instanceof UnauthorizedError) {
-        //   console.log("opa");
-        // }
 
         return Promise.reject(errorInstance);
       },
@@ -36,7 +32,7 @@ export class HttpAxiosAdapter implements HttpClient {
   }
 
   public async get<Response>(url: string): Promise<Response> {
-    return HttpAxiosAdapter.makeRequest<void, Response>(url, {
+    return this.makeRequest<void, Response>(url, {
       method: "GET",
     });
   }
@@ -45,7 +41,7 @@ export class HttpAxiosAdapter implements HttpClient {
     url: string,
     data: RequestBody,
   ): Promise<Response> {
-    return HttpAxiosAdapter.makeRequest<RequestBody, Response>(url, {
+    return this.makeRequest<RequestBody, Response>(url, {
       method: "POST",
       body: data,
     });
@@ -55,16 +51,13 @@ export class HttpAxiosAdapter implements HttpClient {
     url: string,
     data: RequestBody,
   ): Promise<Response> {
-    return HttpAxiosAdapter.makeRequest<RequestBody, Response>(url, {
+    return this.makeRequest<RequestBody, Response>(url, {
       method: "PATCH",
       body: data,
     });
   }
 
-  private static async makeRequest<RequestBody, Response>(
-    path: string,
-    options: Options<RequestBody>,
-  ) {
+  private async makeRequest<RequestBody, Response>(path: string, options: Options<RequestBody>) {
     const response = await this.axiosClient<RequestBody, Response>({
       url: path,
       method: options.method,

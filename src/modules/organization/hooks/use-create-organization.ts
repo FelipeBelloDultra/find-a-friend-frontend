@@ -50,7 +50,6 @@ export function useCreateOrganization() {
   }
 
   function onErrorRequest(error: Error) {
-    console.log(error);
     if (error instanceof UnauthorizedError) {
       addToast({
         message: t("login.form.error.unauthorized.title"),
