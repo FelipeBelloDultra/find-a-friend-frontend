@@ -1,13 +1,12 @@
-import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
+import { useSignUp } from "~/modules/authentication/hooks/use-sign-up";
 import { SIGN_IN_ROUTE } from "~/router/constants";
 
-import { useSignUp } from "../hooks/use-sign-up";
-
-export function RegisterForm() {
+export function CreateOrganization() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { errors, register, onSignUpFormSubmit, isLoading } = useSignUp();
