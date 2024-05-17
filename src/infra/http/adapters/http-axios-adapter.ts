@@ -20,6 +20,17 @@ export class HttpAxiosAdapter implements HttpClient {
     baseURL: import.meta.env.VITE_API_URL,
   });
 
+  constructor() {
+    this.axiosClient.interceptors.response.use(
+      (response) => response,
+      async (error) => {
+        const errorInstance = this.handleAxiosError(error);
+
+        return Promise.reject(errorInstance);
+      },
+    );
+  }
+
   public async get<Response>(url: string): Promise<Response> {
     return this.makeRequest<void, Response>(url, {
       method: "GET",
@@ -37,27 +48,21 @@ export class HttpAxiosAdapter implements HttpClient {
   }
 
   private async makeRequest<RequestBody, Response>(path: string, options: Options<RequestBody>) {
-    try {
-      const response = await this.axiosClient<RequestBody, { data: Response }>({
-        url: path,
-        method: options.method,
-        data: options.body,
-        headers: {
-          "Content-Type": "application/json",
-          ...options.headers,
-        },
-        withCredentials: true,
-      });
+    const response = await this.axiosClient<RequestBody, { data: Response }>({
+      url: path,
+      method: options.method,
+      data: options.body,
+      headers: {
+        "Content-Type": "application/json",
+        ...options.headers,
+      },
+      withCredentials: true,
+    });
 
-      return response.data;
-    } catch (err) {
-      const error = this.handleMakeRequestError(err);
-
-      throw error;
-    }
+    return response.data;
   }
 
-  private handleMakeRequestError(error: unknown) {
+  private handleAxiosError(error: unknown) {
     if (
       !(error instanceof AxiosError) ||
       !error.status ||
