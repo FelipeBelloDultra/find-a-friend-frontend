@@ -3,16 +3,17 @@ import { useNavigate } from "react-router-dom";
 
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
-import { useSignUp } from "~/modules/authentication/hooks/use-sign-up";
 import { SIGN_IN_ROUTE } from "~/router/constants";
+
+import { useCreateOrganization } from "../hooks/use-create-organization";
 
 export function CreateOrganization() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { errors, register, onSignUpFormSubmit, isLoading } = useSignUp();
+  const { errors, register, onCreateOrganizationFormSubmit, isLoading } = useCreateOrganization();
 
   return (
-    <form onSubmit={onSignUpFormSubmit()}>
+    <form onSubmit={onCreateOrganizationFormSubmit()}>
       <span className="flex flex-col gap-4">
         <Input.Container>
           <Input.Label to="owner_name">{t("register.form.input_owner_name.label")}</Input.Label>

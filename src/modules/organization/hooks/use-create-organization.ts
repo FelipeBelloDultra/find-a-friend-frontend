@@ -5,23 +5,21 @@ import { t } from "i18next";
 
 import { UnauthorizedHttpError, ValidationHttpError } from "~/infra/http/errors";
 import { useToast } from "~/hooks/use-toast";
+import { useAuth } from "~/modules/authentication/hooks/use-auth";
+import { schemas } from "~/modules/authentication/hooks/schemas";
 
-import { useAuth } from "../hooks/use-auth";
-
-import { schemas } from "./schemas";
-
-import type { RegisterProps } from "../gateway/auth-gateway";
+import type { RegisterProps } from "~/modules/authentication/gateway/auth-gateway";
 import type { z } from "zod";
 
-type SignUpFormSchema = z.infer<typeof schemas.signUp>;
+type CreateOrganizationFormSchema = z.infer<typeof schemas.signUp>;
 
-export function useSignUp() {
+export function useCreateOrganization() {
   const {
     register,
     handleSubmit,
     setError,
     formState: { errors },
-  } = useForm<SignUpFormSchema>({
+  } = useForm<CreateOrganizationFormSchema>({
     resolver: zodResolver(schemas.signUp),
   });
   const { addToast } = useToast();
@@ -76,7 +74,7 @@ export function useSignUp() {
     });
   }
 
-  function onSignUpFormSubmit() {
+  function onCreateOrganizationFormSubmit() {
     return handleSubmit((data) =>
       mutate({
         logoUrl: "",
@@ -92,6 +90,6 @@ export function useSignUp() {
     errors,
     isLoading: isPending,
     register,
-    onSignUpFormSubmit,
+    onCreateOrganizationFormSubmit,
   };
 }
