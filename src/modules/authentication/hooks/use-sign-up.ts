@@ -7,10 +7,10 @@ import { UnauthorizedHttpError, ValidationHttpError } from "~/infra/http/errors"
 import { useToast } from "~/hooks/use-toast";
 
 import { useAuth } from "../hooks/use-auth";
-import { useAuthStore } from "../store/auth-store";
 
 import { schemas } from "./schemas";
 
+import type { RegisterProps } from "../gateway/auth-gateway";
 import type { z } from "zod";
 
 type SignUpFormSchema = z.infer<typeof schemas.signUp>;
@@ -26,19 +26,24 @@ export function useSignUp() {
   });
   const { addToast } = useToast();
   const { authGateway } = useAuth();
-  const { setToken } = useAuthStore();
   const { mutate, isPending } = useMutation({
-    mutationFn: (data: SignUpFormSchema) => authGateway.authenticate(data),
+    mutationFn: (data: RegisterProps) =>
+      authGateway.register({
+        email: data.email,
+        logoUrl: data.logoUrl,
+        name: data.name,
+        password: data.password,
+        phone: data.phone,
+      }),
     onSuccess: onSuccessRequest,
     onError: onErrorRequest,
   });
 
-  function onSuccessRequest(token: string) {
+  function onSuccessRequest() {
     addToast({
       message: t("login.form.success.title"),
       type: "success",
     });
-    setToken(token);
   }
 
   function onErrorRequest(error: Error) {
@@ -74,11 +79,11 @@ export function useSignUp() {
   function onSignUpFormSubmit() {
     return handleSubmit((data) =>
       mutate({
-        owner_name: data.owner_name,
+        logoUrl: "",
+        name: data.owner_name,
         email: data.email,
         phone: data.phone,
         password: data.password,
-        password_confirmation: data.password_confirmation,
       }),
     );
   }

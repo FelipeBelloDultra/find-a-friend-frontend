@@ -1,5 +1,5 @@
 import type { HttpClient } from "~/infra/http/http-client";
-import type { AuthenticateProps, AuthGateway } from "../auth-gateway";
+import type { AuthenticateProps, AuthGateway, RegisterProps } from "../auth-gateway";
 
 export class HttpAuthGateway implements AuthGateway {
   constructor(private readonly httpClient: HttpClient) {}
@@ -11,5 +11,9 @@ export class HttpAuthGateway implements AuthGateway {
     );
 
     return token;
+  }
+
+  public async register(data: RegisterProps): Promise<void> {
+    return await this.httpClient.post<void, RegisterProps>("/api/orgs", data);
   }
 }
