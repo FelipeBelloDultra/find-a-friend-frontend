@@ -21,19 +21,19 @@ export class HttpFetchAdapter implements HttpClient {
     });
   }
 
-  public async post<HttpResponse = void, RequestBodyData = unknown>(
+  public async post<Response = void, RequestBody = unknown>(
     url: string,
-    data: RequestBodyData,
-  ): Promise<HttpResponse> {
+    data: RequestBody,
+  ): Promise<Response> {
     return await this.makeRequest(url, {
       method: "POST",
       body: data,
     });
   }
 
-  private async makeRequest<HttpRequestBody = void, HttpResponse = unknown>(
+  private async makeRequest<RequestBody = void, Response = unknown>(
     path: string,
-    options: HttpOptions<HttpRequestBody>,
+    options: HttpOptions<RequestBody>,
   ) {
     const headers = new Headers();
 
@@ -55,7 +55,12 @@ export class HttpFetchAdapter implements HttpClient {
     });
 
     if (response.ok) {
-      return (await response.json()) as HttpResponse;
+      const contentType = response.headers.get("Content-Type");
+      if (contentType?.includes("application/json")) {
+        return (await response.json()) as Response;
+      }
+
+      return void 0 as Response;
     }
 
     if (response.status === 401) {

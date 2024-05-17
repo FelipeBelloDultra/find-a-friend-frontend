@@ -1,7 +1,7 @@
 export interface HttpClient {
-  get: <HttpResponse>(url: string) => Promise<HttpResponse>;
-  post: <HttpResponse = void, RequestBodyData = unknown>(
+  get: <Response>(url: string) => Promise<Response>;
+  post: <Response = void, RequestBody = unknown>(
     url: string,
-    data: RequestBodyData,
-  ) => Promise<HttpResponse>;
+    data: RequestBody,
+  ) => Promise<Response>;
 }

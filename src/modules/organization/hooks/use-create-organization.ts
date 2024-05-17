@@ -1,10 +1,12 @@
+import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { t } from "i18next";
 
 import { UnauthorizedHttpError, ValidationHttpError } from "~/infra/http/errors";
 import { useToast } from "~/hooks/use-toast";
+import { SIGN_IN_ROUTE } from "~/router/constants";
 
 import { schemas } from "./schemas";
 import { useOrganization } from "./use-organization";
@@ -23,6 +25,7 @@ export function useCreateOrganization() {
   } = useForm<CreateOrganizationFormSchema>({
     resolver: zodResolver(schemas.createOrgnanization),
   });
+  const navigate = useNavigate();
   const { addToast } = useToast();
   const { organizationGateway } = useOrganization();
   const { mutate, isPending } = useMutation({
@@ -40,12 +43,14 @@ export function useCreateOrganization() {
 
   function onSuccessRequest() {
     addToast({
-      message: t("login.form.success.title"),
+      message: t("register.form.success.title"),
       type: "success",
     });
+    navigate(SIGN_IN_ROUTE);
   }
 
   function onErrorRequest(error: Error) {
+    console.log(error);
     if (error instanceof UnauthorizedHttpError) {
       addToast({
         message: t("login.form.error.unauthorized.title"),

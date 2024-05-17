@@ -57,6 +57,9 @@
     "register": {
       "welcome": "Cadastre sua organização",
       "form": {
+        "success": {
+          "title": "Conta criada com sucesso!"
+        },
         "input_owner_name": {
           "label": "Nome do responsável",
           "placeholder": "Antônio Bandeira"
