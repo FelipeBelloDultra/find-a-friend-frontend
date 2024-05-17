@@ -9,11 +9,18 @@
     },
     "validation": {
       "email": "Insira um email válido",
+      "format": {
+        "password_confirmation": "As senhas devem ser iguais",
+        "phone": "Campo inválido, use o formato (16) 99999-9999",
+        "owner_name": "Por favor, coloque o nome completo"
+      },
       "max": {
+        "owner_name": "O campo nome do responsável deve ter no máximo {{maxSize}} caracteres",
         "password": "O campo senha deve ter no máximo {{maxSize}} caracteres",
         "email": "O campo email deve ter no máximo {{maxSize}} caracteres"
       },
       "min": {
+        "owner_name": "O campo nome do responsável deve ter no mínimo {{minSize}} caracteres",
         "password": "O campo senha deve ter no mínimo {{minSize}} caracteres",
         "email": "O campo email deve ter no mínimo {{minSize}} caracteres"
       }
