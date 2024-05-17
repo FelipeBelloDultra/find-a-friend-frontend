@@ -13,22 +13,22 @@ import { schemas } from "./schemas";
 
 import type { z } from "zod";
 
-type SignInFormSchema = z.infer<typeof schemas.signIn>;
+type SignUpFormSchema = z.infer<typeof schemas.signUp>;
 
-export function useSignIn() {
+export function useSignUp() {
   const {
     register,
     handleSubmit,
     setError,
     formState: { errors },
-  } = useForm<SignInFormSchema>({
-    resolver: zodResolver(schemas.signIn),
+  } = useForm<SignUpFormSchema>({
+    resolver: zodResolver(schemas.signUp),
   });
   const { addToast } = useToast();
   const { authGateway } = useAuth();
   const { setToken } = useAuthStore();
   const { mutate, isPending } = useMutation({
-    mutationFn: (data: SignInFormSchema) => authGateway.authenticate(data),
+    mutationFn: (data: SignUpFormSchema) => authGateway.authenticate(data),
     onSuccess: onSuccessRequest,
     onError: onErrorRequest,
   });
@@ -71,11 +71,14 @@ export function useSignIn() {
     });
   }
 
-  function onSignInFormSubmit() {
+  function onSignUpFormSubmit() {
     return handleSubmit((data) =>
       mutate({
+        owner_name: data.owner_name,
         email: data.email,
+        phone: data.phone,
         password: data.password,
+        password_confirmation: data.password_confirmation,
       }),
     );
   }
@@ -84,6 +87,6 @@ export function useSignIn() {
     errors,
     isLoading: isPending,
     register,
-    onSignInFormSubmit,
+    onSignUpFormSubmit,
   };
 }

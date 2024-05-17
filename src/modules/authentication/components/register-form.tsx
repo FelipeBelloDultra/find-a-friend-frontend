@@ -5,27 +5,25 @@ import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { SIGN_IN_ROUTE } from "~/router/constants";
 
-import type { FormEvent } from "react";
+import { useSignUp } from "../hooks/use-sign-up";
 
 export function RegisterForm() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-
-  async function handleSubmitForm(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-  }
+  const { errors, register, onSignUpFormSubmit, isLoading } = useSignUp();
 
   return (
-    <form onSubmit={handleSubmitForm}>
+    <form onSubmit={onSignUpFormSubmit()}>
       <span className="flex flex-col gap-4">
         <Input.Container>
           <Input.Label to="owner_name">{t("register.form.input_owner_name.label")}</Input.Label>
           <Input.Root
             placeholder={t("register.form.input_owner_name.placeholder")}
             type="text"
-            name="owner_name"
+            hasError={!!errors.owner_name?.message}
+            {...register("owner_name")}
           />
-          <Input.Error />
+          <Input.Error message={errors.owner_name?.message} />
         </Input.Container>
 
         <Input.Container>
@@ -33,9 +31,10 @@ export function RegisterForm() {
           <Input.Root
             placeholder={t("register.form.input_email.placeholder")}
             type="email"
-            name="email"
+            hasError={!!errors.email?.message}
+            {...register("email")}
           />
-          <Input.Error />
+          <Input.Error message={errors.email?.message} />
         </Input.Container>
 
         <Input.Container>
@@ -43,9 +42,10 @@ export function RegisterForm() {
           <Input.Root
             placeholder={t("register.form.input_phone.placeholder")}
             type="text"
-            name="phone"
+            hasError={!!errors.phone?.message}
+            {...register("phone")}
           />
-          <Input.Error />
+          <Input.Error message={errors.phone?.message} />
         </Input.Container>
 
         <Input.Container>
@@ -53,9 +53,10 @@ export function RegisterForm() {
           <Input.Root
             placeholder={t("register.form.input_password.placeholder")}
             type="password"
-            name="password"
+            hasError={!!errors.password?.message}
+            {...register("password")}
           />
-          <Input.Error />
+          <Input.Error message={errors.password?.message} />
         </Input.Container>
 
         <Input.Container>
@@ -65,18 +66,25 @@ export function RegisterForm() {
           <Input.Root
             placeholder={t("register.form.input_password_confirmation.placeholder")}
             type="password"
-            name="password_confirmation"
+            hasError={!!errors.password_confirmation?.message}
+            {...register("password_confirmation")}
           />
-          <Input.Error />
+          <Input.Error message={errors.password_confirmation?.message} />
         </Input.Container>
       </span>
 
       <span className="flex flex-col gap-4 mt-11">
-        <Button type="submit">{t("register.form.btn_submit")}</Button>
+        <Button
+          isLoading={isLoading}
+          type="submit"
+        >
+          {t("register.form.btn_submit")}
+        </Button>
 
         <Button
           variant="secondary"
           type="button"
+          isDisabled={isLoading}
           onClick={() => navigate(SIGN_IN_ROUTE)}
         >
           {t("register.form.btn_has_account")}
