@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { t } from "i18next";
 
-import { UnauthorizedHttpError, ValidationHttpError } from "~/infra/http/errors";
+import { UnauthorizedError, UnprocessableError } from "~/infra/http/errors";
 import { useToast } from "~/hooks/use-toast";
 
 import { useAuth } from "../hooks/use-auth";
@@ -42,7 +42,7 @@ export function useSignIn() {
   }
 
   function onErrorRequest(error: Error) {
-    if (error instanceof UnauthorizedHttpError) {
+    if (error instanceof UnauthorizedError) {
       addToast({
         message: t("login.form.error.unauthorized.title"),
         type: "error",
@@ -50,7 +50,7 @@ export function useSignIn() {
       return;
     }
 
-    if (error instanceof ValidationHttpError) {
+    if (error instanceof UnprocessableError) {
       Object.entries(error.issues).forEach(([key, value]) => {
         if (key === "email" || key === "password") {
           setError(key, {

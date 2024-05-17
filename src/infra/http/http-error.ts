@@ -1,3 +1,7 @@
+export type ValidationIssues = {
+  [key: string]: Array<string>;
+};
+
 export class HttpError extends Error {
   public readonly statusCode: number;
 
