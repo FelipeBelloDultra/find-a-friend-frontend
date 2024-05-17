@@ -5,13 +5,14 @@ import { t } from "i18next";
 
 import { UnauthorizedHttpError, ValidationHttpError } from "~/infra/http/errors";
 import { useToast } from "~/hooks/use-toast";
-import { useAuth } from "~/modules/authentication/hooks/use-auth";
-import { schemas } from "~/modules/authentication/hooks/schemas";
 
-import type { RegisterProps } from "~/modules/authentication/gateway/auth-gateway";
+import { schemas } from "./schemas";
+import { useOrganization } from "./use-organization";
+
+import type { CreateOrganizationProps } from "../gateway/org-gateway";
 import type { z } from "zod";
 
-type CreateOrganizationFormSchema = z.infer<typeof schemas.signUp>;
+type CreateOrganizationFormSchema = z.infer<typeof schemas.createOrgnanization>;
 
 export function useCreateOrganization() {
   const {
@@ -20,13 +21,13 @@ export function useCreateOrganization() {
     setError,
     formState: { errors },
   } = useForm<CreateOrganizationFormSchema>({
-    resolver: zodResolver(schemas.signUp),
+    resolver: zodResolver(schemas.createOrgnanization),
   });
   const { addToast } = useToast();
-  const { authGateway } = useAuth();
+  const { organizationGateway } = useOrganization();
   const { mutate, isPending } = useMutation({
-    mutationFn: (data: RegisterProps) =>
-      authGateway.register({
+    mutationFn: (data: CreateOrganizationProps) =>
+      organizationGateway.create({
         email: data.email,
         logoUrl: data.logoUrl,
         name: data.name,
