@@ -32,7 +32,6 @@ export function useCreateOrganization() {
     mutationFn: (data: CreateOrganizationProps) =>
       organizationGateway.create({
         email: data.email,
-        logoUrl: data.logoUrl,
         name: data.name,
         password: data.password,
         phone: data.phone,
@@ -81,7 +80,6 @@ export function useCreateOrganization() {
   function onCreateOrganizationFormSubmit() {
     return handleSubmit((data) =>
       mutate({
-        logoUrl: "",
         name: data.owner_name,
         email: data.email,
         phone: data.phone,

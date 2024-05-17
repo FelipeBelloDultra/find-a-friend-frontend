@@ -3,7 +3,6 @@ export interface CreateOrganizationProps {
   email: string;
   phone: string;
   password: string;
-  logoUrl: string;
 }
 
 export interface OrganizationGateway {
