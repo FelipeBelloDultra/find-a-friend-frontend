@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { t } from "i18next";
 
-import { UnauthorizedError, UnprocessableError } from "~/infra/http/errors";
+import { ConflictError, UnprocessableError } from "~/infra/http/errors";
 import { useToast } from "~/hooks/use-toast";
 import { SIGN_IN_ROUTE } from "~/router/constants";
 
@@ -50,10 +50,9 @@ export function useCreateOrganization() {
   }
 
   function onErrorRequest(error: Error) {
-    if (error instanceof UnauthorizedError) {
-      addToast({
-        message: t("login.form.error.unauthorized.title"),
-        type: "error",
+    if (error instanceof ConflictError) {
+      setError("email", {
+        message: t("validation.email_conflict"),
       });
       return;
     }
@@ -67,14 +66,14 @@ export function useCreateOrganization() {
         }
       });
       addToast({
-        message: t("login.form.error.validation.title"),
+        message: t("register.form.error.validation.title"),
         type: "error",
       });
       return;
     }
 
     addToast({
-      message: t("login.form.error.internal.title"),
+      message: t("register.form.error.internal.title"),
       type: "error",
     });
   }

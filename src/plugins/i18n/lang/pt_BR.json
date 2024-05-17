@@ -8,6 +8,7 @@
       }
     },
     "validation": {
+      "email_conflict": "Esse email já está em uso, escolha outro",
       "email": "Insira um email válido",
       "format": {
         "password_confirmation": "As senhas devem ser iguais",
@@ -57,6 +58,14 @@
     "register": {
       "welcome": "Cadastre sua organização",
       "form": {
+        "error": {
+          "internal": {
+            "title": "Algo inesperado acontenceu, tente novamente mais tarde"
+          },
+          "validation": {
+            "title": "Confira os campos e tente novamente"
+          }
+        },
         "success": {
           "title": "Conta criada com sucesso!"
         },
