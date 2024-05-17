@@ -12,19 +12,23 @@ interface HeaderOptions {
 interface Options<RequestBody = unknown> {
   body?: RequestBody;
   headers?: HeaderOptions;
-  method: "GET" | "POST" | "PUT" | "DELETE";
+  method: "GET" | "POST" | "PATCH";
 }
 
 export class HttpAxiosAdapter implements HttpClient {
-  private readonly axiosClient = axios.create({
+  static readonly axiosClient = axios.create({
     baseURL: import.meta.env.VITE_API_URL,
   });
 
   constructor() {
-    this.axiosClient.interceptors.response.use(
+    HttpAxiosAdapter.axiosClient.interceptors.response.use(
       (response) => response.data,
       async (error) => {
         const errorInstance = this.handleAxiosError(error);
+
+        // if (errorInstance instanceof UnauthorizedError) {
+        //   console.log("opa");
+        // }
 
         return Promise.reject(errorInstance);
       },
@@ -32,7 +36,7 @@ export class HttpAxiosAdapter implements HttpClient {
   }
 
   public async get<Response>(url: string): Promise<Response> {
-    return this.makeRequest<void, Response>(url, {
+    return HttpAxiosAdapter.makeRequest<void, Response>(url, {
       method: "GET",
     });
   }
@@ -41,13 +45,26 @@ export class HttpAxiosAdapter implements HttpClient {
     url: string,
     data: RequestBody,
   ): Promise<Response> {
-    return this.makeRequest<RequestBody, Response>(url, {
+    return HttpAxiosAdapter.makeRequest<RequestBody, Response>(url, {
       method: "POST",
       body: data,
     });
   }
 
-  private async makeRequest<RequestBody, Response>(path: string, options: Options<RequestBody>) {
+  public async patch<Response = void, RequestBody = unknown>(
+    url: string,
+    data: RequestBody,
+  ): Promise<Response> {
+    return HttpAxiosAdapter.makeRequest<RequestBody, Response>(url, {
+      method: "PATCH",
+      body: data,
+    });
+  }
+
+  private static async makeRequest<RequestBody, Response>(
+    path: string,
+    options: Options<RequestBody>,
+  ) {
     const response = await this.axiosClient<RequestBody, Response>({
       url: path,
       method: options.method,

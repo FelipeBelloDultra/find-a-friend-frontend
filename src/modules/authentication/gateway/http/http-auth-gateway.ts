@@ -12,4 +12,10 @@ export class HttpAuthGateway implements AuthGateway {
 
     return token;
   }
+
+  public async refreshToken(): Promise<string> {
+    const { token } = await this.httpClient.patch<{ token: string }>("/api/refresh-token");
+
+    return token;
+  }
 }
