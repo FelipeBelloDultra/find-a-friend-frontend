@@ -7,6 +7,34 @@ import { SIGN_IN_ROUTE } from "~/router/constants";
 
 import { useCreateOrganization } from "../hooks/use-create-organization";
 
+const CREATE_ORGANIZATION_INPUTS = [
+  {
+    id: Math.random() + Date.now(),
+    field: "owner_name",
+    input_type: "text",
+  },
+  {
+    id: Math.random() + Date.now(),
+    field: "email",
+    input_type: "email",
+  },
+  {
+    id: Math.random() + Date.now(),
+    field: "phone",
+    input_type: "text",
+  },
+  {
+    id: Math.random() + Date.now(),
+    field: "password",
+    input_type: "password",
+  },
+  {
+    id: Math.random() + Date.now(),
+    field: "password_confirmation",
+    input_type: "password",
+  },
+] as const;
+
 export function CreateOrganization() {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -15,62 +43,18 @@ export function CreateOrganization() {
   return (
     <form onSubmit={onCreateOrganizationFormSubmit()}>
       <span className="flex flex-col gap-4">
-        <Input.Container>
-          <Input.Label to="owner_name">{t("register.form.input_owner_name.label")}</Input.Label>
-          <Input.Root
-            placeholder={t("register.form.input_owner_name.placeholder")}
-            type="text"
-            hasError={!!errors.owner_name?.message}
-            {...register("owner_name")}
-          />
-          <Input.Error message={errors.owner_name?.message} />
-        </Input.Container>
-
-        <Input.Container>
-          <Input.Label to="email">{t("register.form.input_email.label")}</Input.Label>
-          <Input.Root
-            placeholder={t("register.form.input_email.placeholder")}
-            type="email"
-            hasError={!!errors.email?.message}
-            {...register("email")}
-          />
-          <Input.Error message={errors.email?.message} />
-        </Input.Container>
-
-        <Input.Container>
-          <Input.Label to="phone">{t("register.form.input_phone.label")}</Input.Label>
-          <Input.Root
-            placeholder={t("register.form.input_phone.placeholder")}
-            type="text"
-            hasError={!!errors.phone?.message}
-            {...register("phone")}
-          />
-          <Input.Error message={errors.phone?.message} />
-        </Input.Container>
-
-        <Input.Container>
-          <Input.Label to="password">{t("register.form.input_password.label")}</Input.Label>
-          <Input.Root
-            placeholder={t("register.form.input_password.placeholder")}
-            type="password"
-            hasError={!!errors.password?.message}
-            {...register("password")}
-          />
-          <Input.Error message={errors.password?.message} />
-        </Input.Container>
-
-        <Input.Container>
-          <Input.Label to="password_confirmation">
-            {t("register.form.input_password_confirmation.label")}
-          </Input.Label>
-          <Input.Root
-            placeholder={t("register.form.input_password_confirmation.placeholder")}
-            type="password"
-            hasError={!!errors.password_confirmation?.message}
-            {...register("password_confirmation")}
-          />
-          <Input.Error message={errors.password_confirmation?.message} />
-        </Input.Container>
+        {CREATE_ORGANIZATION_INPUTS.map(({ id, field, input_type }) => (
+          <Input.Container key={id}>
+            <Input.Label to={field}>{t(`register.form.input_${field}.label`)}</Input.Label>
+            <Input.Root
+              placeholder={t(`register.form.input_${field}.placeholder`)}
+              type={input_type}
+              hasError={!!errors[field]?.message}
+              {...register(field)}
+            />
+            <Input.Error message={errors[field]?.message} />
+          </Input.Container>
+        ))}
       </span>
 
       <span className="flex flex-col gap-4 mt-11">

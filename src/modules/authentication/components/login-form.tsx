@@ -7,6 +7,19 @@ import { SIGN_UP_ROUTE } from "~/router/constants";
 
 import { useSignIn } from "../hooks/use-sign-in";
 
+const SIGN_IN_INPUTS = [
+  {
+    id: Math.random() + Date.now(),
+    field: "email",
+    input_type: "email",
+  },
+  {
+    id: Math.random() + Date.now(),
+    field: "password",
+    input_type: "password",
+  },
+] as const;
+
 export function LoginForm() {
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -15,27 +28,18 @@ export function LoginForm() {
   return (
     <form onSubmit={onSignInFormSubmit()}>
       <span className="flex flex-col gap-4">
-        <Input.Container>
-          <Input.Label to="email">{t("login.form.input_email.label")}</Input.Label>
-          <Input.Root
-            placeholder={t("login.form.input_email.placeholder")}
-            type="email"
-            hasError={!!errors.email?.message}
-            {...register("email")}
-          />
-          <Input.Error message={errors.email?.message} />
-        </Input.Container>
-
-        <Input.Container>
-          <Input.Label to="password">{t("login.form.input_password.label")}</Input.Label>
-          <Input.Root
-            placeholder={t("login.form.input_password.placeholder")}
-            type="password"
-            hasError={!!errors.password?.message}
-            {...register("password")}
-          />
-          <Input.Error message={errors.password?.message} />
-        </Input.Container>
+        {SIGN_IN_INPUTS.map(({ id, field, input_type }) => (
+          <Input.Container key={id}>
+            <Input.Label to={field}>{t(`login.form.input_${field}.label`)}</Input.Label>
+            <Input.Root
+              placeholder={t(`login.form.input_${field}.placeholder`)}
+              type={input_type}
+              hasError={!!errors[field]?.message}
+              {...register(field)}
+            />
+            <Input.Error message={errors[field]?.message} />
+          </Input.Container>
+        ))}
       </span>
 
       <span className="flex flex-col gap-4 mt-11">
