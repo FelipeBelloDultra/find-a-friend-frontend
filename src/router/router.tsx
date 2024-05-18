@@ -3,32 +3,32 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { SignIn, SignUp } from "~/modules/authentication/pages";
 import { AuthenticatedLayout, UnauthenticatedLayout } from "~/layouts";
 
-import { DASHBOARD_ROUTE, SIGN_IN_ROUTE, SIGN_UP_ROUTE } from "./constants";
+import { ROUTES } from "./constants";
 
 export function Router() {
   return (
     <Routes>
       <Route element={<UnauthenticatedLayout />}>
         <Route
-          path={SIGN_IN_ROUTE}
+          path={ROUTES.signIn.path}
           element={<SignIn />}
         />
         <Route
-          path={SIGN_UP_ROUTE}
+          path={ROUTES.signUp.path}
           element={<SignUp />}
         />
       </Route>
 
       <Route element={<AuthenticatedLayout />}>
         <Route
-          path={DASHBOARD_ROUTE}
+          path={ROUTES.dashboard.path}
           element={<div>estou logadoooooo</div>}
         />
       </Route>
 
       <Route
         path="*"
-        element={<Navigate to={SIGN_IN_ROUTE} />}
+        element={<Navigate to={ROUTES.signIn.path} />}
       />
     </Routes>
   );

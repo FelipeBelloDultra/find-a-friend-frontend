@@ -3,7 +3,7 @@ import { t } from "i18next";
 
 import { ConflictError, UnprocessableError } from "~/infra/http/errors";
 import { useToast } from "~/hooks/use-toast";
-import { SIGN_IN_ROUTE } from "~/router/constants";
+import { ROUTES } from "~/router/constants";
 import { useForm } from "~/hooks/use-form";
 
 import { schemas } from "./schemas";
@@ -34,7 +34,7 @@ export function useCreateOrganization() {
         message: t("register.form.success.title"),
         type: "success",
       });
-      navigate(SIGN_IN_ROUTE);
+      navigate(ROUTES.signIn.path);
     },
   });
 

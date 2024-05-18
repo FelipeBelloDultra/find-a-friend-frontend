@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
-import { SIGN_UP_ROUTE } from "~/router/constants";
+import { ROUTES } from "~/router/constants";
 
 import { useSignIn } from "../hooks/use-sign-in";
 
@@ -52,7 +52,7 @@ export function LoginForm() {
 
         <Button
           isDisabled={isLoading}
-          onClick={() => navigate(SIGN_UP_ROUTE)}
+          onClick={() => navigate(ROUTES.signUp.path)}
           variant="secondary"
           type="button"
         >

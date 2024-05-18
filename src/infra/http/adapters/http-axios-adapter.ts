@@ -30,6 +30,10 @@ export class HttpAxiosAdapter implements HttpClient {
       onRejected: (error) => {
         const errorInstance = this.handleAxiosError(error);
 
+        if (error.config) {
+          errorInstance.setRequestConfig(error.config);
+        }
+
         return Promise.reject(errorInstance);
       },
     });
@@ -104,7 +108,6 @@ export class HttpAxiosAdapter implements HttpClient {
         return new UnauthorizedRefreshTokenError();
       }
 
-      // dispatchEvent(new CustomEvent("unauthorized"));
       return new UnauthorizedError();
     }
 
@@ -119,5 +122,7 @@ export class HttpAxiosAdapter implements HttpClient {
 
       return new ConflictError(issues);
     }
+
+    return new InternalError();
   }
 }

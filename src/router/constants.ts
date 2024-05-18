@@ -1,3 +1,20 @@
-export const SIGN_IN_ROUTE = "/sign-in";
-export const SIGN_UP_ROUTE = "/sign-up";
-export const DASHBOARD_ROUTE = "/dashboard";
+enum RoutesCollection {
+  signIn = "/sign-in",
+  signUp = "/sign-up",
+  dashboard = "/dashboard",
+}
+
+export const ROUTES = {
+  signIn: {
+    path: RoutesCollection.signIn,
+    needAuthentication: false,
+  },
+  signUp: {
+    path: RoutesCollection.signUp,
+    needAuthentication: false,
+  },
+  dashboard: {
+    path: RoutesCollection.dashboard,
+    needAuthentication: true,
+  },
+};
