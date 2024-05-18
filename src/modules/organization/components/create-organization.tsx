@@ -41,7 +41,7 @@ export function CreateOrganization() {
   const { errors, register, onCreateOrganizationFormSubmit, isLoading } = useCreateOrganization();
 
   return (
-    <form onSubmit={onCreateOrganizationFormSubmit()}>
+    <form onSubmit={onCreateOrganizationFormSubmit}>
       <span className="flex flex-col gap-4">
         {CREATE_ORGANIZATION_INPUTS.map(({ id, field, input_type }) => (
           <Input.Container key={id}>
