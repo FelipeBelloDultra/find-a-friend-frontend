@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { t } from "i18next";
@@ -11,7 +10,6 @@ import { SIGN_IN_ROUTE } from "~/router/constants";
 import { schemas } from "./schemas";
 import { useOrganization } from "./use-organization";
 
-import type { CreateOrganizationProps } from "../gateway/org-gateway";
 import type { z } from "zod";
 
 type CreateOrganizationFormSchema = z.infer<typeof schemas.createOrgnanization>;
@@ -21,34 +19,15 @@ export function useCreateOrganization() {
     register,
     handleSubmit,
     setError,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<CreateOrganizationFormSchema>({
     resolver: zodResolver(schemas.createOrgnanization),
   });
   const navigate = useNavigate();
   const { addToast } = useToast();
   const { organizationGateway } = useOrganization();
-  const { mutate, isPending } = useMutation({
-    mutationFn: (data: CreateOrganizationProps) =>
-      organizationGateway.create({
-        email: data.email,
-        name: data.name,
-        password: data.password,
-        phone: data.phone,
-      }),
-    onSuccess: onSuccessRequest,
-    onError: onErrorRequest,
-  });
 
-  function onSuccessRequest() {
-    addToast({
-      message: t("register.form.success.title"),
-      type: "success",
-    });
-    navigate(SIGN_IN_ROUTE);
-  }
-
-  function onErrorRequest(error: Error) {
+  function onErrorRequest(error: unknown) {
     if (error instanceof ConflictError) {
       setError("email", {
         message: t("validation.email_conflict"),
@@ -77,21 +56,29 @@ export function useCreateOrganization() {
     });
   }
 
-  function onCreateOrganizationFormSubmit() {
-    return handleSubmit((data) =>
-      mutate({
-        name: data.owner_name,
+  async function onCreateOrganizationFormSubmit(data: CreateOrganizationFormSchema) {
+    try {
+      await organizationGateway.create({
         email: data.email,
-        phone: data.phone,
+        name: data.owner_name,
         password: data.password,
-      }),
-    );
+        phone: data.phone,
+      });
+
+      addToast({
+        message: t("register.form.success.title"),
+        type: "success",
+      });
+      navigate(SIGN_IN_ROUTE);
+    } catch (error) {
+      onErrorRequest(error);
+    }
   }
 
   return {
     errors,
-    isLoading: isPending,
+    isLoading: isSubmitting,
     register,
-    onCreateOrganizationFormSubmit,
+    onCreateOrganizationFormSubmit: handleSubmit(onCreateOrganizationFormSubmit),
   };
 }

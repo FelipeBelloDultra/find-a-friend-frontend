@@ -10,8 +10,7 @@
     "plugin:react-hooks/recommended",
     "plugin:prettier/recommended",
     "plugin:import/recommended",
-    "plugin:storybook/recommended",
-    "plugin:@tanstack/eslint-plugin-query/recommended"
+    "plugin:storybook/recommended"
   ],
   "ignorePatterns": ["dist", ".eslintrc.cjs"],
   "parser": "@typescript-eslint/parser",

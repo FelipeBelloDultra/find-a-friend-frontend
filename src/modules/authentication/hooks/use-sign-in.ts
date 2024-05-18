@@ -31,6 +31,12 @@ export function useSignIn() {
         message: t("login.form.error.unauthorized.title"),
         type: "error",
       });
+      setError("email", {
+        message: t("login.form.error.unauthorized.title"),
+      });
+      setError("password", {
+        message: t("login.form.error.unauthorized.title"),
+      });
       return;
     }
 
