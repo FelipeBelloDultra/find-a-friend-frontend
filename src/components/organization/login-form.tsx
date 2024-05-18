@@ -3,16 +3,10 @@ import { useNavigate } from "react-router-dom";
 
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
+import { useSignIn } from "~/hooks/use-sign-in";
 import { ROUTES } from "~/router/constants";
 
-import { useCreateOrganization } from "../hooks/use-create-organization";
-
-const CREATE_ORGANIZATION_INPUTS = [
-  {
-    id: Math.random() + Date.now(),
-    field: "owner_name",
-    input_type: "text",
-  },
+const SIGN_IN_INPUTS = [
   {
     id: Math.random() + Date.now(),
     field: "email",
@@ -20,34 +14,24 @@ const CREATE_ORGANIZATION_INPUTS = [
   },
   {
     id: Math.random() + Date.now(),
-    field: "phone",
-    input_type: "text",
-  },
-  {
-    id: Math.random() + Date.now(),
     field: "password",
-    input_type: "password",
-  },
-  {
-    id: Math.random() + Date.now(),
-    field: "password_confirmation",
     input_type: "password",
   },
 ] as const;
 
-export function CreateOrganization() {
-  const { t } = useTranslation();
+export function LoginForm() {
   const navigate = useNavigate();
-  const { errors, register, onCreateOrganizationFormSubmit, isLoading } = useCreateOrganization();
+  const { t } = useTranslation();
+  const { errors, register, onSignInFormSubmit, isLoading } = useSignIn();
 
   return (
-    <form onSubmit={onCreateOrganizationFormSubmit}>
+    <form onSubmit={onSignInFormSubmit}>
       <span className="flex flex-col gap-4">
-        {CREATE_ORGANIZATION_INPUTS.map(({ id, field, input_type }) => (
+        {SIGN_IN_INPUTS.map(({ id, field, input_type }) => (
           <Input.Container key={id}>
-            <Input.Label to={field}>{t(`register.form.input_${field}.label`)}</Input.Label>
+            <Input.Label to={field}>{t(`login.form.input_${field}.label`)}</Input.Label>
             <Input.Root
-              placeholder={t(`register.form.input_${field}.placeholder`)}
+              placeholder={t(`login.form.input_${field}.placeholder`)}
               type={input_type}
               hasError={!!errors[field]?.message}
               {...register(field)}
@@ -59,19 +43,19 @@ export function CreateOrganization() {
 
       <span className="flex flex-col gap-4 mt-11">
         <Button
-          isLoading={isLoading}
           type="submit"
+          isLoading={isLoading}
         >
-          {t("register.form.btn_submit")}
+          {t("login.form.btn_submit")}
         </Button>
 
         <Button
+          isDisabled={isLoading}
+          onClick={() => navigate(ROUTES.signUp.path)}
           variant="secondary"
           type="button"
-          isDisabled={isLoading}
-          onClick={() => navigate(ROUTES.signIn.path)}
         >
-          {t("register.form.btn_has_account")}
+          {t("login.form.btn_register")}
         </Button>
       </span>
     </form>

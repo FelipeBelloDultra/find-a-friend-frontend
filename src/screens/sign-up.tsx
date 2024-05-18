@@ -1,8 +1,7 @@
 import { useTranslation } from "react-i18next";
 
-import { CreateOrganization } from "~/modules/organization/components/create-organization";
-
-import { FloatImgBackground } from "../../components";
+import { CreateOrganization } from "~/components/organization/create-organization";
+import { FloatImgBackground } from "~/components/shared/float-img-background";
 
 export function SignUp() {
   const { t } = useTranslation();

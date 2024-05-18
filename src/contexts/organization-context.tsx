@@ -1,11 +1,10 @@
 import { createContext, useMemo } from "react";
 
 import { useHttp } from "~/hooks/use-http";
-
-import { HttpOrgGateway } from "../gateway/http/http-org-gateway";
+import { HttpOrgGateway } from "~/gateway/org/http/http-org-gateway";
 
 import type { ReactNode } from "react";
-import type { OrganizationGateway } from "../gateway/org-gateway";
+import type { OrganizationGateway } from "~/gateway/org/org-gateway";
 
 interface OrganizationContextProps {
   children: ReactNode;

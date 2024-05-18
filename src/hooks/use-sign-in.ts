@@ -3,10 +3,9 @@ import { t } from "i18next";
 import { UnauthorizedError, UnprocessableError } from "~/infra/http/errors";
 import { useToast } from "~/hooks/use-toast";
 import { useForm } from "~/hooks/use-form";
+import { schemas } from "~/schemas";
 
 import { useAuth } from "../hooks/use-auth";
-
-import { schemas } from "./schemas";
 
 import type { z } from "zod";
 

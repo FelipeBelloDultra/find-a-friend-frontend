@@ -1,8 +1,8 @@
-import { OrgMapper } from "~/modules/organization/mappers/org-mapper";
+import { OrgMapper } from "~/mappers/org-mapper";
 
-import type { DomainOrg, PersistenceOrg } from "~/modules/organization/mappers/org-mapper";
 import type { HttpClient } from "~/infra/http/http-client";
 import type { AuthenticateProps, AuthGateway } from "../auth-gateway";
+import type { DomainOrg, PersistenceOrg } from "~/mappers/org-mapper";
 
 export class HttpAuthGateway implements AuthGateway {
   constructor(private readonly httpClient: HttpClient) {}

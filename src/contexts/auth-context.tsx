@@ -1,15 +1,15 @@
 import { createContext, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { useOrgStore } from "~/modules/organization/store/org-store";
 import { ROUTES } from "~/router/constants";
 import { useHttp } from "~/hooks/use-http";
+import { useOrgStore } from "~/store/org-store";
+import { HttpAuthGateway } from "~/gateway/auth/http/http-auth-gateway";
 
 import { useAuthStore } from "../store/auth-store";
-import { HttpAuthGateway } from "../gateway/http/http-auth-gateway";
 
+import type { AuthenticateProps, AuthGateway } from "~/gateway/auth/auth-gateway";
 import type { ReactNode } from "react";
-import type { AuthenticateProps, AuthGateway } from "../gateway/auth-gateway";
 
 interface AuthContextProps {
   children: ReactNode;

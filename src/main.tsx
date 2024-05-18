@@ -3,7 +3,7 @@ import * as ReactDOM from "react-dom/client";
 
 import "~/plugins/i18n";
 
-import App from "~/app";
+import { App } from "~/app";
 
 import "~/styles/global.css";
 

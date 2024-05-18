@@ -1,4 +1,4 @@
-import type { DomainOrg } from "~/modules/organization/mappers/org-mapper";
+import type { DomainOrg } from "~/mappers/org-mapper";
 
 export interface AuthenticateProps {
   email: string;

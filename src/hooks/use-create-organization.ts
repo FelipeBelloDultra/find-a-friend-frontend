@@ -5,8 +5,8 @@ import { ConflictError, UnprocessableError } from "~/infra/http/errors";
 import { useToast } from "~/hooks/use-toast";
 import { ROUTES } from "~/router/constants";
 import { useForm } from "~/hooks/use-form";
+import { schemas } from "~/schemas";
 
-import { schemas } from "./schemas";
 import { useOrganization } from "./use-organization";
 
 import type { z } from "zod";
