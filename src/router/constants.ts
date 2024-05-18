@@ -7,14 +7,11 @@ enum RoutesCollection {
 export const ROUTES = {
   signIn: {
     path: RoutesCollection.signIn,
-    needAuthentication: false,
   },
   signUp: {
     path: RoutesCollection.signUp,
-    needAuthentication: false,
   },
   dashboard: {
     path: RoutesCollection.dashboard,
-    needAuthentication: true,
   },
 };
