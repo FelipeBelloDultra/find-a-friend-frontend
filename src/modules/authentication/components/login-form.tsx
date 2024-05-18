@@ -26,7 +26,7 @@ export function LoginForm() {
   const { errors, register, onSignInFormSubmit, isLoading } = useSignIn();
 
   return (
-    <form onSubmit={onSignInFormSubmit()}>
+    <form onSubmit={onSignInFormSubmit}>
       <span className="flex flex-col gap-4">
         {SIGN_IN_INPUTS.map(({ id, field, input_type }) => (
           <Input.Container key={id}>

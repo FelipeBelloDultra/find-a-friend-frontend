@@ -1,4 +1,3 @@
-import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { t } from "i18next";
@@ -19,24 +18,14 @@ export function useSignIn() {
     register,
     handleSubmit,
     setError,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<SignInFormSchema>({
     resolver: zodResolver(schemas.signIn),
   });
   const { addToast } = useToast();
   const { authenticate } = useAuth();
-  const { mutate, isPending } = useMutation({
-    mutationFn: (data: SignInFormSchema) => authenticate(data),
-    onError: onErrorRequest,
-    onSuccess: () => {
-      addToast({
-        message: t("login.form.success.title"),
-        type: "success",
-      });
-    },
-  });
 
-  function onErrorRequest(error: Error) {
+  function onErrorRequest(error: unknown) {
     if (error instanceof UnauthorizedError) {
       addToast({
         message: t("login.form.error.unauthorized.title"),
@@ -66,19 +55,23 @@ export function useSignIn() {
     });
   }
 
-  function onSignInFormSubmit() {
-    return handleSubmit((data) =>
-      mutate({
-        email: data.email,
-        password: data.password,
-      }),
-    );
+  async function onSignInFormSubmit(data: SignInFormSchema) {
+    try {
+      await authenticate(data);
+
+      addToast({
+        message: t("login.form.success.title"),
+        type: "success",
+      });
+    } catch (error) {
+      onErrorRequest(error);
+    }
   }
 
   return {
     errors,
-    isLoading: isPending,
+    isLoading: isSubmitting,
     register,
-    onSignInFormSubmit,
+    onSignInFormSubmit: handleSubmit(onSignInFormSubmit),
   };
 }

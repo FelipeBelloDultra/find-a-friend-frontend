@@ -1,5 +1,4 @@
 import { BrowserRouter } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { Router } from "./router/router";
 import { AuthContext } from "./modules/authentication/contexts/auth-context";
@@ -9,7 +8,6 @@ import { ToastContainer } from "./components/ui/toast/toast-container";
 import { makeOrganizationGateway } from "./modules/organization/factories/make-organization-gateway";
 import { OrganizationContext } from "./modules/organization/contexts/organization-context";
 
-const reactQueryClient = new QueryClient();
 const httpClient = new HttpAxiosAdapter();
 
 const authenticationGateway = makeAuthGateway(httpClient);
@@ -20,11 +18,9 @@ function App() {
     <BrowserRouter>
       <AuthContext authGateway={authenticationGateway}>
         <OrganizationContext organizationGateway={organizationGateway}>
-          <QueryClientProvider client={reactQueryClient}>
-            <Router />
+          <Router />
 
-            <ToastContainer />
-          </QueryClientProvider>
+          <ToastContainer />
         </OrganizationContext>
       </AuthContext>
     </BrowserRouter>
