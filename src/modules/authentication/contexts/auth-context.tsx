@@ -4,8 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { useOrgStore } from "~/modules/organization/store/org-store";
 import { UnauthorizedRefreshTokenError } from "~/infra/http/errors";
 import { DASHBOARD_ROUTE, SIGN_IN_ROUTE } from "~/router/constants";
+import { useHttp } from "~/hooks/use-http";
 
 import { useAuthStore } from "../store/auth-store";
+import { HttpAuthGateway } from "../gateway/http/http-auth-gateway";
 
 import type { ReactNode } from "react";
 import type { AuthenticateProps, AuthGateway } from "../gateway/auth-gateway";
@@ -13,7 +15,6 @@ import type { DomainOrg } from "~/modules/organization/mappers/org-mapper";
 
 interface AuthContextProps {
   children: ReactNode;
-  authGateway: AuthGateway;
 }
 
 interface AuthContextProviderData {
@@ -26,10 +27,13 @@ interface AuthContextProviderData {
 
 export const AuthContextProvider = createContext({} as AuthContextProviderData);
 
-export function AuthContext({ authGateway, children }: AuthContextProps) {
+export function AuthContext({ children }: AuthContextProps) {
+  const { httpClient } = useHttp();
   const { setOrganization, organization } = useOrgStore();
   const { setToken, token } = useAuthStore();
   const navigate = useNavigate();
+
+  const authGateway = useMemo(() => new HttpAuthGateway(httpClient), [httpClient]);
 
   const logout = useCallback(() => {
     sessionStorage.clear();
