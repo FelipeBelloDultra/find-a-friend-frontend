@@ -9,7 +9,7 @@ import {
 } from "../errors";
 import { HttpStatusCode } from "../http-status-code";
 
-import type { HttpClient } from "../http-client";
+import type { HttpClient, ResponseInterceptor } from "../http-client";
 
 interface Options<RequestBody = unknown> {
   body?: RequestBody;
@@ -20,19 +20,19 @@ interface Options<RequestBody = unknown> {
 }
 
 export class HttpAxiosAdapter implements HttpClient {
-  private readonly axiosClient = axios.create({
+  public readonly instance = axios.create({
     baseURL: import.meta.env.VITE_API_URL,
   });
 
   constructor() {
-    this.axiosClient.interceptors.response.use(
-      (response) => response.data,
-      async (error) => {
+    this.addResponseInterceptor({
+      onFulfilled: (response) => response.data,
+      onRejected: (error) => {
         const errorInstance = this.handleAxiosError(error);
 
         return Promise.reject(errorInstance);
       },
-    );
+    });
   }
 
   public async get<Response>(url: string): Promise<Response> {
@@ -62,13 +62,21 @@ export class HttpAxiosAdapter implements HttpClient {
   }
 
   public setHeader(key: string, value: string): void {
-    this.axiosClient.defaults.headers.common = {
+    this.instance.defaults.headers.common = {
       [key]: value,
     };
   }
 
+  public addResponseInterceptor({ onFulfilled, onRejected }: ResponseInterceptor) {
+    return this.instance.interceptors.response.use(onFulfilled, onRejected);
+  }
+
+  public removeResponseInterceptor(interceptorId: number): void {
+    this.instance.interceptors.response.eject(interceptorId);
+  }
+
   private async makeRequest<RequestBody, Response>(path: string, options: Options<RequestBody>) {
-    const response = await this.axiosClient<RequestBody, Response>({
+    const response = await this.instance<RequestBody, Response>({
       url: path,
       method: options.method,
       data: options.body,
@@ -96,7 +104,7 @@ export class HttpAxiosAdapter implements HttpClient {
         return new UnauthorizedRefreshTokenError();
       }
 
-      dispatchEvent(new CustomEvent("unauthorized"));
+      // dispatchEvent(new CustomEvent("unauthorized"));
       return new UnauthorizedError();
     }
 
