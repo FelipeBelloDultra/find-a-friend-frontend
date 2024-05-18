@@ -7,7 +7,6 @@ import { UnauthorizedError, UnprocessableError } from "~/infra/http/errors";
 import { useToast } from "~/hooks/use-toast";
 
 import { useAuth } from "../hooks/use-auth";
-import { useAuthStore } from "../store/auth-store";
 
 import { schemas } from "./schemas";
 
@@ -25,21 +24,17 @@ export function useSignIn() {
     resolver: zodResolver(schemas.signIn),
   });
   const { addToast } = useToast();
-  const { authGateway } = useAuth();
-  const { setToken } = useAuthStore();
+  const { authenticate } = useAuth();
   const { mutate, isPending } = useMutation({
-    mutationFn: (data: SignInFormSchema) => authGateway.authenticate(data),
-    onSuccess: onSuccessRequest,
+    mutationFn: (data: SignInFormSchema) => authenticate(data),
     onError: onErrorRequest,
+    onSuccess: () => {
+      addToast({
+        message: t("login.form.success.title"),
+        type: "success",
+      });
+    },
   });
-
-  function onSuccessRequest(token: string) {
-    addToast({
-      message: t("login.form.success.title"),
-      type: "success",
-    });
-    setToken(token);
-  }
 
   function onErrorRequest(error: Error) {
     if (error instanceof UnauthorizedError) {

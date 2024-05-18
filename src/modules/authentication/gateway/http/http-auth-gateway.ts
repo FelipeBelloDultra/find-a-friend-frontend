@@ -12,17 +12,22 @@ export class HttpAuthGateway implements AuthGateway {
       "/api/session",
       data,
     );
+    this.httpClient.setHeader("Authorization", `Bearer ${token}`);
 
     return token;
   }
 
   public async refreshToken(): Promise<string> {
     const { token } = await this.httpClient.patch<{ token: string }>("/api/refresh-token");
+    this.httpClient.setHeader("Authorization", `Bearer ${token}`);
 
     return token;
   }
 
-  public async me(): Promise<DomainOrg> {
+  public async me(token?: string): Promise<DomainOrg> {
+    if (token) {
+      this.httpClient.setHeader("Authorization", `Bearer ${token}`);
+    }
     const org = await this.httpClient.get<PersistenceOrg>("/api/auth/me");
     const toDomainOrg = OrgMapper.toDomain(org);
 

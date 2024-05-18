@@ -1,6 +1,12 @@
 import axios, { AxiosError } from "axios";
 
-import { ConflictError, InternalError, UnauthorizedError, UnprocessableError } from "../errors";
+import {
+  ConflictError,
+  InternalError,
+  UnauthorizedError,
+  UnauthorizedRefreshTokenError,
+  UnprocessableError,
+} from "../errors";
 import { HttpStatusCode } from "../http-status-code";
 
 import type { HttpClient } from "../http-client";
@@ -86,6 +92,11 @@ export class HttpAxiosAdapter implements HttpClient {
     }
 
     if (error.response.status === HttpStatusCode.Unauthorized) {
+      if (error.config?.url === "/api/refresh-token") {
+        return new UnauthorizedRefreshTokenError();
+      }
+
+      dispatchEvent(new CustomEvent("unauthorized"));
       return new UnauthorizedError();
     }
 
