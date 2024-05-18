@@ -5,18 +5,15 @@ import { Router } from "~/router/router";
 import { ToastContainer } from "~/components/ui/toast/toast-container";
 import { HttpContext } from "~/contexts/http-context";
 import { AuthContext } from "~/contexts/auth-context";
-import { OrganizationContext } from "~/contexts/organization-context";
 
 export function App() {
   return (
     <BrowserRouter>
       <HttpContext httpClient={new HttpAxiosAdapter()}>
         <AuthContext>
-          <OrganizationContext>
-            <Router />
+          <Router />
 
-            <ToastContainer />
-          </OrganizationContext>
+          <ToastContainer />
         </AuthContext>
       </HttpContext>
     </BrowserRouter>

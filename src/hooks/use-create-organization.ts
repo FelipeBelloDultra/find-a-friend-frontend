@@ -7,7 +7,7 @@ import { ROUTES } from "~/router/constants";
 import { useForm } from "~/hooks/use-form";
 import { schemas } from "~/schemas";
 
-import { useOrganization } from "./use-organization";
+import { useHttp } from "./use-http";
 
 import type { z } from "zod";
 
@@ -16,7 +16,7 @@ type CreateOrganizationFormSchema = z.infer<typeof schemas.createOrgnanization>;
 export function useCreateOrganization() {
   const navigate = useNavigate();
   const { addToast } = useToast();
-  const { organizationGateway } = useOrganization();
+  const { organizationGateway } = useHttp();
   const { formErrors, handleSubmit, isLoading, register, setFormError } = useForm<
     CreateOrganizationFormSchema,
     void

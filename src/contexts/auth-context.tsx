@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { ROUTES } from "~/router/constants";
 import { useHttp } from "~/hooks/use-http";
 import { useOrgStore } from "~/store/org-store";
-import { HttpAuthGateway } from "~/gateway/auth/http/http-auth-gateway";
 
 import { useAuthStore } from "../store/auth-store";
 
@@ -24,12 +23,10 @@ interface AuthContextProviderData {
 export const AuthContextProvider = createContext({} as AuthContextProviderData);
 
 export function AuthContext({ children }: AuthContextProps) {
-  const { httpClient } = useHttp();
+  const { authGateway } = useHttp();
   const { organization } = useOrgStore();
   const { setToken, token } = useAuthStore();
   const navigate = useNavigate();
-
-  const authGateway = useMemo(() => new HttpAuthGateway(httpClient), [httpClient]);
 
   const authenticate = useCallback(
     async (data: AuthenticateProps) => {
