@@ -1,12 +1,12 @@
 import { createContext } from "react";
 
-import { HttpAuthenticationGateway } from "~/modules/authentication/gateways/http/http-authentication-gateway";
-import { HttpOrganizationGateway } from "~/modules/organization/gateways/organization/http/http-organization-gateway";
+import { HttpAuthenticationGateway } from "~/modules/authentication/gateways";
+import { HttpOrganizationGateway } from "~/modules/organization/gateways";
 
-import type { AuthenticationGateway } from "~/modules/authentication/gateways/authentication-gateway";
 import type { ReactNode } from "react";
+import type { OrganizationGateway } from "~/modules/organization/gateways";
+import type { AuthenticationGateway } from "~/modules/authentication/gateways";
 import type { HttpClient } from "~/infra/http/http-client";
-import type { OrganizationGateway } from "~/modules/organization/gateways/organization/organization-gateway";
 
 interface HttpContextProps {
   children: ReactNode;

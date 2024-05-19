@@ -1,4 +1,4 @@
-import type { DomainOrganization } from "~/modules/organization/mappers/organization-mapper";
+import type { DomainOrganization } from "~/modules/organization/mappers";
 
 export interface AuthenticateProps {
   email: string;
@@ -8,5 +8,5 @@ export interface AuthenticateProps {
 export interface AuthenticationGateway {
   authenticate: ({ email, password }: AuthenticateProps) => Promise<string>;
   refreshToken: () => Promise<string>;
-  me: (token?: string) => Promise<DomainOrganization>;
+  me: () => Promise<DomainOrganization>;
 }

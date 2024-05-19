@@ -8,6 +8,7 @@ import {
   UnprocessableError,
 } from "../errors";
 import { HttpStatusCode } from "../http-status-code";
+import { Endpoints } from "../endpoints";
 
 import type { HttpClient, ResponseInterceptor } from "../http-client";
 
@@ -79,6 +80,10 @@ export class HttpAxiosAdapter implements HttpClient {
     this.instance.interceptors.response.eject(interceptorId);
   }
 
+  public setBearerToken(token: string): void {
+    this.setHeader("Authorization", `Bearer ${token}`);
+  }
+
   private async makeRequest<RequestBody, Response>(path: string, options: Options<RequestBody>) {
     const response = await this.instance<RequestBody, Response>({
       url: path,
@@ -104,7 +109,7 @@ export class HttpAxiosAdapter implements HttpClient {
     }
 
     if (error.response.status === HttpStatusCode.Unauthorized) {
-      if (error.config?.url === "/api/refresh-token") {
+      if (error.config?.url === Endpoints.RefreshToken) {
         return new UnauthorizedRefreshTokenError();
       }
 

@@ -1,7 +1,6 @@
 import { useTranslation } from "react-i18next";
 
-import { FloatImgBackground } from "~/modules/organization/components";
-import { CreateOrganizationForm } from "~/modules/organization/components/create-organization-form";
+import { CreateOrganizationForm, FloatImgBackground } from "~/modules/organization/components";
 
 export function SignUp() {
   const { t } = useTranslation();

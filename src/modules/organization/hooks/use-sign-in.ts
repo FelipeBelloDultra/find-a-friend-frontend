@@ -1,7 +1,7 @@
 import { t } from "i18next";
 
 import { UnauthorizedError, UnprocessableError } from "~/infra/http/errors";
-import { useAuthentication } from "~/modules/authentication/hooks/use-authentication";
+import { useAuthentication } from "~/modules/authentication/hooks";
 import { useForm, useToast } from "~/modules/shared/hooks";
 
 import { schemas } from "../schemas";

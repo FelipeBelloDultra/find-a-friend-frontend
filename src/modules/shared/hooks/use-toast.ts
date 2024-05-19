@@ -1,4 +1,4 @@
-import type { AddToast } from "../components/ui/toast";
+import type { AddToast } from "../components";
 
 export const ADD_TOAST_EVENT_NAME = "add-toast";
 

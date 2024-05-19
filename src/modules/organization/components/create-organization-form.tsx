@@ -2,8 +2,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 import { ROUTES } from "~/router/constants";
-import { Input } from "~/modules/shared/components/ui/input";
-import { Button } from "~/modules/shared/components/ui/button";
+import { Button, Input } from "~/modules/shared/components";
 
 import { useCreateOrganization } from "../hooks/use-create-organization";
 

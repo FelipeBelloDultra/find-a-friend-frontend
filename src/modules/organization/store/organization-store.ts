@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-import type { DomainOrganization } from "../mappers/organization-mapper";
+import type { DomainOrganization } from "../mappers";
 
 interface OrganizationStoreState {
   organization: DomainOrganization;

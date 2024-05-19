@@ -11,6 +11,7 @@ export interface HttpClient {
     data?: RequestBody,
   ) => Promise<Response>;
   setHeader: (key: string, value: string) => void;
+  setBearerToken: (token: string) => void;
   instance: AxiosInstance;
   addResponseInterceptor: ({ onFulfilled, onRejected }: ResponseInterceptor) => number;
   removeResponseInterceptor: (interceptorId: number) => void;

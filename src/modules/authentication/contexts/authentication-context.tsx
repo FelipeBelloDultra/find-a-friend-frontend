@@ -2,12 +2,12 @@ import { createContext, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { ROUTES } from "~/router/constants";
-import { useOrganizationStore } from "~/modules/organization/store/organization-store";
+import { useOrganizationStore } from "~/modules/organization/store";
 import { useHttp } from "~/modules/shared/hooks";
 
-import { useAuthenticationStore } from "../store/authentication-store";
+import { useAuthenticationStore } from "../store";
 
-import type { AuthenticateProps, AuthenticationGateway } from "../gateways/authentication-gateway";
+import type { AuthenticateProps, AuthenticationGateway } from "../gateways";
 import type { ReactNode } from "react";
 
 interface AuthenticationContextProps {
