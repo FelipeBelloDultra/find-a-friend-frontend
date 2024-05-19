@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 
-import { CreateOrganization } from "~/components/organization/create-organization";
-import { FloatImgBackground } from "~/components/shared/float-img-background";
+import { FloatImgBackground } from "~/modules/organization/components";
+import { CreateOrganizationForm } from "~/modules/organization/components/create-organization-form";
 
 export function SignUp() {
   const { t } = useTranslation();
@@ -17,7 +17,7 @@ export function SignUp() {
               </h1>
             </div>
 
-            <CreateOrganization />
+            <CreateOrganizationForm />
           </section>
         </article>
 

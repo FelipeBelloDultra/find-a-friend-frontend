@@ -2,19 +2,19 @@ import { BrowserRouter } from "react-router-dom";
 
 import { HttpAxiosAdapter } from "~/infra/http/adapters/http-axios-adapter";
 import { Router } from "~/router/router";
-import { ToastContainer } from "~/components/ui/toast/toast-container";
-import { HttpContext } from "~/contexts/http-context";
-import { AuthContext } from "~/contexts/auth-context";
+import { AuthenticationContext } from "~/modules/authentication/contexts/authentication-context";
+import { HttpContext } from "~/modules/shared/contexts/http-context";
+import { ToastContainer } from "~/modules/shared/components/ui/toast";
 
 export function App() {
   return (
     <BrowserRouter>
       <HttpContext httpClient={new HttpAxiosAdapter()}>
-        <AuthContext>
+        <AuthenticationContext>
           <Router />
 
           <ToastContainer />
-        </AuthContext>
+        </AuthenticationContext>
       </HttpContext>
     </BrowserRouter>
   );
