@@ -2,10 +2,12 @@ import { Navigate, Route, Routes } from "react-router-dom";
 
 import { SignIn, SignUp } from "~/screens";
 import { AuthorizedLayout, UnauthorizedLayout } from "~/layouts";
+import { useAuthenticationStore } from "~/modules/authentication/store";
 
 import { ROUTES } from "./constants";
 
 export function Router() {
+  const { token } = useAuthenticationStore();
   return (
     <Routes>
       <Route element={<UnauthorizedLayout />}>
@@ -22,7 +24,7 @@ export function Router() {
       <Route element={<AuthorizedLayout />}>
         <Route
           path={ROUTES.dashboard.path}
-          element={<div />}
+          element={<div>{token}</div>}
         />
       </Route>
 

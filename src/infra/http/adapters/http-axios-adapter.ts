@@ -67,9 +67,7 @@ export class HttpAxiosAdapter implements HttpClient {
   }
 
   public setHeader(key: string, value: string): void {
-    this.instance.defaults.headers.common = {
-      [key]: value,
-    };
+    this.instance.defaults.headers[key] = value;
   }
 
   public addResponseInterceptor({ onFulfilled, onRejected }: ResponseInterceptor) {
