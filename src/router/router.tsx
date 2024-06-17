@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 
-import { SignIn, SignUp } from "~/screens";
+import { Home, SignIn, SignUp } from "~/screens";
 import { AuthorizedLayout, UnauthorizedLayout } from "~/layouts";
 import { useAuthenticationStore } from "~/modules/authentication/store";
 
@@ -11,6 +11,10 @@ export function Router() {
   return (
     <Routes>
       <Route element={<UnauthorizedLayout />}>
+        <Route
+          path={ROUTES.friends.path}
+          element={<Home />}
+        />
         <Route
           path={ROUTES.signIn.path}
           element={<SignIn />}
@@ -30,7 +34,7 @@ export function Router() {
 
       <Route
         path="*"
-        element={<Navigate to={ROUTES.signIn.path} />}
+        element={<Navigate to={ROUTES.friends.path} />}
       />
     </Routes>
   );

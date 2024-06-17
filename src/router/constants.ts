@@ -1,6 +1,7 @@
 enum RoutesCollection {
   signIn = "/sign-in",
   signUp = "/sign-up",
+  friends = "/friends",
   dashboard = "/dashboard",
 }
 
@@ -13,5 +14,8 @@ export const ROUTES = {
   },
   dashboard: {
     path: RoutesCollection.dashboard,
+  },
+  friends: {
+    path: RoutesCollection.friends,
   },
 };
